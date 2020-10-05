@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Planner</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="FirstText">Привет мир!</string>
+    <string name="MainText">Вас Вітає Програма-Планер для ваших планів</string>
+    <string name="ExitButton">Вихід</string>
+    <string name="SendButton">Отправить</string>
+    <string name="WelcomeText">Введіть Ваше ім\'я для початку роботи</string>
+    <string name="NewAction">Додати нову подію</string>
+    <string name="NewAction1">На головну</string>
+    <string name="Monday">Понеділок</string>
+    <string name="Tuesday">Вівторок</string>
+    <string name="Wednesday">Середа</string>
+    <string name="Thursday">Четвер</string>
+    <string name="Friday">Пятниця</string>
+    <string name="Saturday">Субота</string>
+    <string name="Sunday">Неділя</string>
+    <string name="Weekend">Вихідні</string>
+    <string name="name">TextView</string>
+    <string name="title_activity_schedule">Schedule</string>
+    <string name="Zagolovok">Введіть назву та час запланованої дії</string>
+    <string name="NameOf">Назва Події</string>
+    <string name="Plain">Введіть назву події</string>
+    <string name="Time">Час</string>
+    <string name="End">Кінець</string>
+    <string name="Timen">Введіть час події</string>
+    <string name="chipping">Часовий проміжок</string>
+    <string name="Start">Початок</string>
+    <string name="StartOfAction">Початок події</string>
+    <string name="EndOfAction">Кінець події</string>
+    <string name="Timenn">Часовий проміжок</string>
+    <string name="returning">Повернутись</string>
+</resources>
