@@ -9,10 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".main_Information_about_program"></activity>
+        <activity android:name=".About_activity" />
         <activity
             android:name=".Schedule"
             android:label="@string/title_activity_schedule"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".DisplayMessageActivity" />
         <activity
             android:name=".MainActivity"

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#CDDC39"
+    tools:context=".About_activity">
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:gravity="center"
+        android:text="Про разработчика"
+        android:textColor="#000DFF"
+        android:textSize="24sp"
+        tools:ignore="MissingConstraints" />
+
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="eugene.example.helloapplication.BlankFragment"
+        android:layout_width="204dp"
+        android:layout_height="546dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="207dp"
+        android:layout_height="554dp"
+        android:gravity="fill"
+        android:text="@string/information"
+        android:textColor="#C3FF0000"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toStartOf="@+id/listFragment"
+        app:layout_constraintTop_toBottomOf="@+id/textView18"
+        tools:text="@string/information" />
+</androidx.constraintlayout.widget.ConstraintLayout>
