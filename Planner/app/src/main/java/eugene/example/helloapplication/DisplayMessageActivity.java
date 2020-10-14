@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -50,6 +51,11 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TimeOfAction.setText(message2);
         if(NameOfAction != null)
             User.setText(message3);
+    }
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
     }
     public void planning(View view)
     {
