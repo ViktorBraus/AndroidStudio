@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import timber.log.Timber;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Information_about_program#newInstance} factory method to
@@ -53,7 +55,36 @@ public class Information_about_program extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        Timber.i("----------(fragment) onStart Called.----------");
+    }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        Timber.i("----------(fragment) onPause Called.----------");
+    }
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        Timber.i("----------(fragment) onDestroy Called.----------");
+    }
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Timber.i("----------(fragment) onResume Called.----------");
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        Timber.i("----------(fragment) onStop Called.----------");
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

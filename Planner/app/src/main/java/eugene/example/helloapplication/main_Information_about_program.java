@@ -4,9 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import timber.log.Timber;
 
 public class main_Information_about_program extends AppCompatActivity {
 
@@ -15,7 +16,36 @@ public class main_Information_about_program extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main__information_about_program);
     }
-
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        Timber.i("----------onStart Called.----------");
+    }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        Timber.i("----------onPause Called.----------");
+    }
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        Timber.i("----------onDestroy Called.----------");
+    }
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Timber.i("----------onResume Called.----------");
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        Timber.i("----------onStop Called.----------");
+    }
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -24,7 +54,7 @@ public class main_Information_about_program extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        TextView headerView = (TextView) findViewById(R.id.header);
+
         switch(id){
             case R.id.open_activity :
                 Intent intent = new Intent(this, DisplayMessageActivity.class);
@@ -53,13 +83,16 @@ public class main_Information_about_program extends AppCompatActivity {
                         "as quick as it possible.\n" +
                         "VIKTOR\n" +
                         "KOROLENKO");
+                sendIntent.setType("text/*");
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivity(shareIntent);
                 return true;
             case R.id.information:
                 intent = new Intent(this, main_Information_about_program.class);
                 startActivity(intent);
                 return true;
             case R.id.exit:
-                MainActivity.exit();
+                onDestroy();
                 return true;
         }
         return super.onOptionsItemSelected(item);

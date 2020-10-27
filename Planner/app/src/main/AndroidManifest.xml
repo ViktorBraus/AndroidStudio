@@ -3,6 +3,7 @@
     package="eugene.example.helloapplication">
 
     <application
+        android:name=".PusherApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,12 +15,12 @@
         <activity
             android:name=".Schedule"
             android:label="@string/title_activity_schedule"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme" />
         <activity android:name=".DisplayMessageActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

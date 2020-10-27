@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import timber.log.Timber;
+
 public class Schedule extends AppCompatActivity
 {
     public final static String EXTRA;
@@ -42,6 +44,36 @@ public class Schedule extends AppCompatActivity
         User.setText(message);
         intent.putExtra(EXTRA, message);
     }
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        Timber.i("----------onStart Called.----------");
+    }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        Timber.i("----------onPause Called.----------");
+    }
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        Timber.i("----------onDestroy Called.----------");
+    }
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Timber.i("----------onResume Called.----------");
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        Timber.i("----------onStop Called.----------");
+    }
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -54,10 +86,12 @@ public class Schedule extends AppCompatActivity
         switch(id){
             case R.id.open_activity :
                 Intent intent = new Intent(this, DisplayMessageActivity.class);
+                Timber.i("---------------------------Активирован пункт меню открытия распорядка дня------------------------");
                 startActivity(intent);
                 return true;
             case R.id.about:
                 intent = new Intent(this, About_activity.class);
+                Timber.i("---------------------------Активирован пункт меню про разработчика------------------------");
                 startActivity(intent);
                 return true;
             case R.id.Rules:
@@ -79,15 +113,26 @@ public class Schedule extends AppCompatActivity
                         "as quick as it possible.\n" +
                         "VIKTOR\n" +
                         "KOROLENKO");
+                sendIntent.setType("text/*");
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                Timber.i("---------------------------Активирован пункт меню для отправки------------------------");
+                startActivity(shareIntent);
+                return true;
+            case R.id.information:
+                intent = new Intent(this, main_Information_about_program.class);
+                Timber.i("---------------------------Активирован пункт меню про программу------------------------");
+                startActivity(intent);
                 return true;
             case R.id.exit:
-                MainActivity.exit();
+                Timber.i("---------------------------выход из программы------------------------");
+                onDestroy();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
         public void onClick(View v)
         {
+            Timber.i("---------------------------Изменение видимости времени события------------------------");
             TextView name = findViewById(R.id.textView15);
             TextView name1 = findViewById(R.id.textView16);
             EditText start = findViewById(R.id.editTextTime2);
@@ -99,7 +144,8 @@ public class Schedule extends AppCompatActivity
                 start.setVisibility(View.VISIBLE);
                 end.setVisibility(View.VISIBLE);
 
-            } else
+            }
+            else
             {
                 name.setVisibility(View.INVISIBLE);
                 name1.setVisibility(View.INVISIBLE);
@@ -110,6 +156,7 @@ public class Schedule extends AppCompatActivity
     public void returning(View view)
     {
         Intent intent = new Intent(this, DisplayMessageActivity.class);
+        Timber.i("---------------------------Возвращение на страницу распорядка------------------------");
         startActivity(intent);
     }
     public void GoNext(View view)
@@ -127,6 +174,7 @@ public class Schedule extends AppCompatActivity
         // Добавляем с помощью свойства putExtra объект - первый параметр - ключ,
         // второй параметр - значение этого объекта
         intent.putExtra(EXTRA, message);
+        Timber.i("---------------------------Добавление пункта в распорядок------------------------");
         startActivity(intent);
     }
 }
