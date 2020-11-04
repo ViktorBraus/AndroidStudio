@@ -1,4 +1,4 @@
-package eugene.example.helloapplication;
+package eugene.example.helloapplication.Menu;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import eugene.example.helloapplication.R;
 import timber.log.Timber;
 
 /**
@@ -89,6 +90,6 @@ public class Information_about_program extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_information_about_program, container, false);
+        return inflater.inflate(R.layout.about_program_fragment, container, false);
     }
 }

@@ -1,4 +1,4 @@
-package eugene.example.helloapplication;
+package eugene.example.helloapplication.Menu;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import eugene.example.helloapplication.Plans.Plans;
+import eugene.example.helloapplication.R;
 import timber.log.Timber;
 
 public class main_Information_about_program extends AppCompatActivity {
@@ -14,7 +16,7 @@ public class main_Information_about_program extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main__information_about_program);
+        setContentView(R.layout.about_program);
     }
     @Override
     public void onStart()
@@ -57,7 +59,7 @@ public class main_Information_about_program extends AppCompatActivity {
 
         switch(id){
             case R.id.open_activity :
-                Intent intent = new Intent(this, DisplayMessageActivity.class);
+                Intent intent = new Intent(this, Plans.class);
                 startActivity(intent);
                 return true;
             case R.id.about:

@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:overScrollMode="always"
     android:verticalScrollbarPosition="defaultPosition"
-    tools:context=".MainActivity"
+    tools:context=".MainPage.MainActivity"
     tools:menu="@menu/main_menu">
 
     <TextView

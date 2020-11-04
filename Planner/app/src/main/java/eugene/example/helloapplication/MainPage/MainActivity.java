@@ -1,21 +1,57 @@
-package eugene.example.helloapplication;
+package eugene.example.helloapplication.MainPage;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import eugene.example.helloapplication.Menu.About_activity;
+import eugene.example.helloapplication.Plans.Plans;
+import eugene.example.helloapplication.R;
+import eugene.example.helloapplication.Timer.Timer;
+import eugene.example.helloapplication.Menu.main_Information_about_program;
 import timber.log.Timber;
 
-public class About_activity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
+    public Timer timer = new Timer();
+    public static String EXTR;
+    public final static String K_REV = "k_rev";
+    public int revenue=0;
+    static {
+        EXTR = "EXTRA_MESSAGE";
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_activity);
+        setContentView(R.layout.main_page);
+        Timber.i("---------------------------onCreate Called.------------------------");
+        timer.startTimerTotal();
+        if (savedInstanceState!=null)
+        {
+            revenue = savedInstanceState.getInt(K_REV, 1);
+        }
+        MainActivity.EXTR = EXTR;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(K_REV,timer.getSecondsCountFocused());
+        Timber.i("onSaveInstanceState Called");
     }
     @Override
     public void onStart()
@@ -27,6 +63,7 @@ public class About_activity extends AppCompatActivity {
     public void onPause()
     {
         super.onPause();
+        timer.stopTimerFocused();
         Timber.i("----------onPause Called.----------");
     }
     @Override
@@ -34,11 +71,13 @@ public class About_activity extends AppCompatActivity {
     {
         super.onDestroy();
         Timber.i("----------onDestroy Called.----------");
+        timer.stopTimerTotal();
     }
     @Override
     public void onResume()
     {
         super.onResume();
+        timer.startTimerFocused();
         Timber.i("----------onResume Called.----------");
     }
     @Override
@@ -58,7 +97,7 @@ public class About_activity extends AppCompatActivity {
         TextView headerView = (TextView) findViewById(R.id.header);
         switch(id){
             case R.id.open_activity :
-                Intent intent = new Intent(this, DisplayMessageActivity.class);
+                Intent intent = new Intent(this, Plans.class);
                 Timber.i("---------------------------Активирован пункт меню открытия распорядка дня------------------------");
                 startActivity(intent);
                 return true;
@@ -103,4 +142,26 @@ public class About_activity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    public void sendMessage(View view)
+    {
+            // действия, совершаемые после нажатия на кнопку
+            // Создаем объект Intent для вызова новой Activity
+            Intent intent = new Intent(this, Plans.class);
+            // Получаем текстовое поле в текущей Activity
+            EditText editText = (EditText) findViewById(R.id.edit_message);
+            // Получае текст данного текстового поля
+            String message = editText.getText().toString();
+            // Добавляем с помощью свойства putExtra объект - первый параметр - ключ,
+            // второй параметр - значение этого объекта
+            intent.putExtra(EXTR, message);
+            // запуск activity
+            startActivity(intent);
+            Timber.plant();
+            Timber.i("------------------sendmessage method used--------------------");
+    }
+    public void Exit(View view)
+    {
+        onDestroy();
+    }
+
 }

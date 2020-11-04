@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#CDDC39"
-    tools:context=".main_Information_about_program">
+    tools:context=".Menu.main_Information_about_program">
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/listFragment2"
-        android:name="eugene.example.helloapplication.Information_about_program"
+        android:name="eugene.example.helloapplication.Menu.Information_about_program"
         android:layout_width="411dp"
         android:layout_height="522dp"
         app:layout_constraintBottom_toBottomOf="parent"

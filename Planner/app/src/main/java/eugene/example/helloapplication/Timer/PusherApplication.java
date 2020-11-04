@@ -1,4 +1,4 @@
-package eugene.example.helloapplication;
+package eugene.example.helloapplication.Timer;
 
 import android.app.Application;
 

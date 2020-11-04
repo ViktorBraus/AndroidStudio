@@ -1,22 +1,30 @@
-package eugene.example.helloapplication;
+package eugene.example.helloapplication.Menu;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
+import eugene.example.helloapplication.R;
 import timber.log.Timber;
 
-public class BlankFragment extends Fragment {
+public class AboutFragment extends Fragment {
 
+        private AboutViewModel aViewModel;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-                View view = inflater.inflate(R.layout.fragment_blank, container, false);
+                View view = inflater.inflate(R.layout.about_fragment, container, false);
+                Log.i("AboutFragment","Called ViewModelProviders.of");
+                aViewModel = ViewModelProvider(this).get(AboutFragment.class);
                 return view;
         }
+
         @Override
         public void onStart()
         {

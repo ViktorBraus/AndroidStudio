@@ -3,22 +3,22 @@
     package="eugene.example.helloapplication">
 
     <application
-        android:name=".PusherApplication"
+        android:name=".Timer.PusherApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main_Information_about_program"></activity>
-        <activity android:name=".About_activity" />
+        <activity android:name=".Menu.main_Information_about_program"></activity>
+        <activity android:name=".Menu.About_activity" />
         <activity
-            android:name=".Schedule"
+            android:name=".PlansCreating.PlansCreating"
             android:label="@string/title_activity_schedule"
             android:theme="@style/AppTheme" />
-        <activity android:name=".DisplayMessageActivity" />
+        <activity android:name=".Plans.Plans" />
         <activity
-            android:name=".MainActivity"
+            android:name=".MainPage.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
             <intent-filter>

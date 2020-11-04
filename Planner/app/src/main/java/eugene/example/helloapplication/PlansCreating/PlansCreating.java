@@ -1,58 +1,52 @@
-package eugene.example.helloapplication;
-
+package eugene.example.helloapplication.PlansCreating;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import eugene.example.helloapplication.Menu.About_activity;
+import eugene.example.helloapplication.Plans.Plans;
+import eugene.example.helloapplication.R;
+import eugene.example.helloapplication.Menu.main_Information_about_program;
 import timber.log.Timber;
 
-
-public class DisplayMessageActivity extends AppCompatActivity {
-    public final static String EXTR;
+public class PlansCreating extends AppCompatActivity
+{
     public final static String EXTRA;
     public final static String EXTRA_MESSAGE;
     public final static String EXTRA_MESSAGE1;
-    //public String message1 = intent.getStringExtra(Schedule.EXTRA_MESSAGE);
-    static {
-        EXTR = "EXTRA_MESSAGE";
-    }
-    static {
+    static
+    {
         EXTRA = "EXTRA_MESSAGE";
     }
-    static {
-        EXTRA_MESSAGE = "EXTRA_MESSAGE1";
+    static
+    {
+    EXTRA_MESSAGE = "EXTRA_MESSAGE1";
     }
     static {
         EXTRA_MESSAGE1 = "EXTRA_MESSAGE2";
     }
+    private CheckBox chipAction;
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display_message);
-        // Получаем сообщение из объекта intent
+    protected void onCreate(Bundle savedInstanceState)
+    {
         Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.EXTR);
-        String message1 = intent.getStringExtra(Schedule.EXTRA_MESSAGE);
-        String message2 = intent.getStringExtra(Schedule.EXTRA_MESSAGE1);
-        String message3 = intent.getStringExtra(Schedule.EXTRA);
-        // Создаем текстовое поле
-        TextView User = findViewById(R.id.name);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.schedule);
+        this.chipAction = (CheckBox) this.findViewById(R.id.checkBox);
+        String message = intent.getStringExtra(Plans.EXTRA);
+        TextView User = findViewById(R.id.textView17);
         User.setTextSize(14);
         User.setText(message);
-
-        TextView NameOfAction = findViewById(R.id.textView7);
-        NameOfAction.setTextSize(14);
-        NameOfAction.setText(message1);
-        TextView TimeOfAction = findViewById(R.id.textView11);
-        TimeOfAction.setTextSize(14);
-        TimeOfAction.setText(message2);
-        if(NameOfAction != null)
-            User.setText(message3);
+        intent.putExtra(EXTRA, message);
     }
     @Override
     public void onStart()
@@ -95,7 +89,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView headerView = (TextView) findViewById(R.id.header);
         switch(id){
             case R.id.open_activity :
-                Intent intent = new Intent(this, DisplayMessageActivity.class);
+                Intent intent = new Intent(this, Plans.class);
                 Timber.i("---------------------------Активирован пункт меню открытия распорядка дня------------------------");
                 startActivity(intent);
                 return true;
@@ -140,19 +134,51 @@ public class DisplayMessageActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    public void planning(View view)
+        public void onClick(View v)
+        {
+            Timber.i("---------------------------Изменение видимости времени события------------------------");
+            TextView name = findViewById(R.id.textView15);
+            TextView name1 = findViewById(R.id.textView16);
+            EditText start = findViewById(R.id.editTextTime2);
+            EditText end = findViewById(R.id.editTextTime3);
+            if(chipAction.isChecked() == true)
+            {
+                name.setVisibility(View.VISIBLE);
+                name1.setVisibility(View.VISIBLE);
+                start.setVisibility(View.VISIBLE);
+                end.setVisibility(View.VISIBLE);
+
+            }
+            else
+            {
+                name.setVisibility(View.INVISIBLE);
+                name1.setVisibility(View.INVISIBLE);
+                start.setVisibility(View.INVISIBLE);
+                end.setVisibility(View.INVISIBLE);
+            }
+        }
+    public void returning(View view)
     {
-        Intent intent = new Intent(this, Schedule.class);
-        TextView editText = findViewById(R.id.name);
-        String message_name = editText.getText().toString();
-        intent.putExtra(EXTRA,message_name);
-        Timber.i("---------------------------Активировано действие перехода на создание плана------------------------");
+        Intent intent = new Intent(this, Plans.class);
+        Timber.i("---------------------------Возвращение на страницу распорядка------------------------");
         startActivity(intent);
     }
-    public void BackWard(View view)
+    public void GoNext(View view)
     {
-        Intent intent = new Intent(this, MainActivity.class);
-        Timber.i("---------------------------Возвращение на главный экран------------------------");
+        Intent intent = new Intent(this, Plans.class);
+        EditText editText = findViewById(R.id.NameOfAction);
+        String message_name = editText.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE,message_name);
+        EditText time = findViewById(R.id.editTextTime);
+        String message_time = time.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE1,message_time);
+        TextView editText1= findViewById(R.id.textView17);
+        // Получае текст данного текстового поля
+        String message = editText1.getText().toString();
+        // Добавляем с помощью свойства putExtra объект - первый параметр - ключ,
+        // второй параметр - значение этого объекта
+        intent.putExtra(EXTRA, message);
+        Timber.i("---------------------------Добавление пункта в распорядок------------------------");
         startActivity(intent);
     }
 }
