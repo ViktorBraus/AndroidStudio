@@ -11,11 +11,11 @@ import timber.log.Timber
 import viktor.braus.kplanner.menu.factoryMethod.About_activity
 import viktor.braus.kplanner.menu.viewModel.InformationViewModel
 import viktor.braus.kplanner.menu.viewModel.main_Information_about_program
-import viktor.braus.kplanner.Plans.Plans
+import viktor.braus.kplanner.plans.ListOfPlans
 import viktor.braus.kplanner.R
-import viktor.braus.kplanner.Timer.TTimer
+import viktor.braus.kplanner.timer.TTimer
 
-
+//"Перейшов на мову Kotlin, 5 Лабораторна робота"
 class MainActivity : AppCompatActivity() {
     var TTimer: TTimer = TTimer()
     var User: InformationViewModel? = null
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
         val id = item.itemId
         when (id) {
             R.id.open_activity -> {
-                val intent = Intent(this, Plans::class.java)
+                val intent = Intent(this, ListOfPlans::class.java)
                 Timber.i("---------------------------Активирован пункт меню открытия распорядка дня------------------------")
                 startActivity(intent)
                 return true
@@ -147,7 +147,7 @@ class MainActivity : AppCompatActivity() {
     fun sendMessage(view: View) {
         // действия, совершаемые после нажатия на кнопку
         // Создаем объект Intent для вызова новой Activity
-        val intent = Intent(this, Plans::class.java)
+        val intent = Intent(this, ListOfPlans::class.java)
         val intent1 = Intent(this, InformationViewModel::class.java)
         // Получаем текстовое поле в текущей Activity
         val editText = findViewById<View>(R.id.edit_message) as EditText

@@ -72,7 +72,7 @@ KOROLENKO</string>
         \n • Возможность поделится любым событием любым доступным методом смартфона
         \n • Реализация «гибкого» интерфейса</string>
     <string name="zz">Информация о программе «planner»:\n Версия: 1.0.2 \n </string>
-    <string name="header">dsfgsdft</string>
-    <string name="User">sfdhgsfdhdf</string>
+    <string name="header"></string>
+    <string name="User"></string>
     <string name="show_user_name">Show User Name</string>
 </resources>

@@ -7,12 +7,12 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import timber.log.Timber
 import viktor.braus.kplanner.menu.factoryMethod.About_activity
-import viktor.braus.kplanner.Plans.Plans
+import viktor.braus.kplanner.plans.ListOfPlans
 import viktor.braus.kplanner.R
 
 
 class main_Information_about_program() : AppCompatActivity(){
-    var Use: Plans? = null
+    var Use: ListOfPlans? = null
     var User: String? =null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +53,7 @@ class main_Information_about_program() : AppCompatActivity(){
         val id = item.itemId
         when (id) {
             R.id.open_activity -> {
-                val intent = Intent(this, Plans::class.java)
+                val intent = Intent(this, ListOfPlans::class.java)
                 startActivity(intent)
                 return true
             }

@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import viktor.braus.kplanner.Plans.Plans
+import viktor.braus.kplanner.plans.ListOfPlans
 import viktor.braus.kplanner.R
 import timber.log.Timber
 import viktor.braus.kplanner.menu.viewModel.main_Information_about_program
@@ -44,7 +44,7 @@ class About_activity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.open_activity -> {
-                val intent = Intent(this, Plans::class.java)
+                val intent = Intent(this, ListOfPlans::class.java)
                 Timber.i("---------------------------Активирован пункт меню открытия распорядка дня------------------------")
                 startActivity(intent)
                 return true

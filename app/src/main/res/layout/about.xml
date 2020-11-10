@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CDDC39"
+    android:background="@drawable/abstrakciya_cvet_ugol_fon_1087"
     tools:context=".menu.factoryMethod.About_activity">
 
     <TextView
@@ -13,28 +13,19 @@
         android:layout_height="49dp"
         android:gravity="center"
         android:text="Про разработчика"
-        android:textColor="#000DFF"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
         tools:ignore="MissingConstraints" />
 
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment"
         android:name="viktor.braus.kplanner.menu.factoryMethod.About_Fragment"
-        android:layout_width="196dp"
-        android:layout_height="543dp"
-        app:layout_constraintStart_toEndOf="@+id/textView19"
+        android:layout_width="match_parent"
+        android:layout_height="655dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
-    <TextView
-        android:id="@+id/textView19"
-        android:layout_width="211dp"
-        android:layout_height="546dp"
-        android:gravity="fill"
-        android:text="@string/information"
-        android:textColor="#C3FF0000"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView18"
-        tools:text="@string/information" />
 </androidx.constraintlayout.widget.ConstraintLayout>

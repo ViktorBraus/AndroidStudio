@@ -1,4 +1,4 @@
-package viktor.braus.kplanner.Plans
+package viktor.braus.kplanner.plans
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,11 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import viktor.braus.kplanner.mainPage.MainActivity
 import viktor.braus.kplanner.menu.factoryMethod.About_activity
 import viktor.braus.kplanner.menu.viewModel.main_Information_about_program
-import viktor.braus.kplanner.PlansCreating.PlansCreating
 import viktor.braus.kplanner.R
 import timber.log.Timber
 
-class Plans : AppCompatActivity() {
+class ListOfPlans : AppCompatActivity() {
     companion object {
         val EXTRA: String? = "EXTRA_MESSAGE"
         //public String message1 = intent.getStringExtra(Schedule.EXTRA_MESSAGE);
@@ -80,7 +79,7 @@ class Plans : AppCompatActivity() {
         val id = item.itemId
         when (id) {
             R.id.open_activity -> {
-                val intent = Intent(this, Plans::class.java)
+                val intent = Intent(this, ListOfPlans::class.java)
                 Timber.i("---------------------------Активирован пункт меню открытия распорядка дня------------------------")
                 startActivity(intent)
                 return true

@@ -1,4 +1,4 @@
-package viktor.braus.kplanner.Timer
+package viktor.braus.kplanner.timer
 
 import android.app.Application
 import timber.log.Timber

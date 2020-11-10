@@ -1,4 +1,4 @@
-package viktor.braus.kplanner.PlansCreating
+package viktor.braus.kplanner.plans
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +11,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import viktor.braus.kplanner.menu.factoryMethod.About_activity
 import viktor.braus.kplanner.menu.viewModel.main_Information_about_program
-import viktor.braus.kplanner.Plans.Plans
 import viktor.braus.kplanner.R
 import timber.log.Timber
 
@@ -38,13 +37,8 @@ class PlansCreating : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val intent = intent
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.schedule)
+        setContentView(R.layout.plans_creating)
         chipAction = findViewById<View>(R.id.checkBox) as CheckBox
-        val message = intent.getStringExtra(Plans.EXTRA)
-        val User = findViewById<TextView>(R.id.textView17)
-        User.textSize = 14f
-        User.text = message
-        intent.putExtra(EXTRA, message)
     }
 
     public override fun onStart() {
@@ -81,7 +75,7 @@ class PlansCreating : AppCompatActivity() {
         val id = item.itemId
         when (id) {
             R.id.open_activity -> {
-                val intent = Intent(this, Plans::class.java)
+                val intent = Intent(this, ListOfPlans::class.java)
                 Timber.i("---------------------------Активирован пункт меню открытия распорядка дня------------------------")
                 startActivity(intent)
                 return true
@@ -156,25 +150,21 @@ class PlansCreating : AppCompatActivity() {
     }
 
     fun returning(view: View?) {
-        val intent = Intent(this, Plans::class.java)
+        val intent = Intent(this, ListOfPlans::class.java)
         Timber.i("---------------------------Возвращение на страницу распорядка------------------------")
         startActivity(intent)
     }
-
     fun GoNext(view: View?) {
-        val intent = Intent(this, Plans::class.java)
+        val intent = Intent(this, ListOfPlans::class.java)
         val editText = findViewById<EditText>(R.id.NameOfAction)
         val message_name = editText.text.toString()
         intent.putExtra(EXTRA_MESSAGE, message_name)
         val time = findViewById<EditText>(R.id.editTextTime)
         val message_time = time.text.toString()
         intent.putExtra(EXTRA_MESSAGE1, message_time)
-        val editText1 = findViewById<TextView>(R.id.textView17)
         // Получае текст данного текстового поля
-        val message = editText1.text.toString()
         // Добавляем с помощью свойства putExtra объект - первый параметр - ключ,
         // второй параметр - значение этого объекта
-        intent.putExtra(EXTRA, message)
         Timber.i("---------------------------Добавление пункта в распорядок------------------------")
         startActivity(intent)
     }

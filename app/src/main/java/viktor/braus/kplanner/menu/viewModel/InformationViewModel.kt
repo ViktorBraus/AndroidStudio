@@ -7,7 +7,7 @@ import java.util.*
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import viktor.braus.kplanner.mainPage.MainActivity
-import viktor.braus.kplanner.Timer.TTimer
+import viktor.braus.kplanner.timer.TTimer
 private val CORRECT_BUZZ_PATTERN = longArrayOf(100, 100, 100, 100, 100, 100)
 private val PANIC_BUZZ_PATTERN = longArrayOf(0, 200)
 private val GAME_OVER_BUZZ_PATTERN = longArrayOf(0, 2000)
