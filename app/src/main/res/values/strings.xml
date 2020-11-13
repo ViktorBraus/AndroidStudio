@@ -10,7 +10,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="MainText">Вас Вітає Програма-Планер для ваших планів</string>
     <string name="ExitButton">Вихід</string>
-    <string name="SendButton">Отправить</string>
+    <string name="SendButton">Увійти</string>
     <string name="WelcomeText">Введіть Ваше ім\'я для початку роботи</string>
     <string name="NewAction">Додати нову подію</string>
     <string name="NewAction1">На головну</string>

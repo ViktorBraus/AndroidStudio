@@ -1,46 +1,37 @@
 package viktor.braus.kplanner.plans
 
+import android.annotation.SuppressLint
+import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import timber.log.Timber
+import viktor.braus.kplanner.R
 import viktor.braus.kplanner.menu.factoryMethod.About_activity
 import viktor.braus.kplanner.menu.viewModel.main_Information_about_program
-import viktor.braus.kplanner.R
-import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PlansCreating : AppCompatActivity() {
-    companion object {
-        var EXTRA: String? = null
-        var EXTRA_MESSAGE: String? = null
-        var EXTRA_MESSAGE1: String? = null
-
-        init {
-            EXTRA = "EXTRA_MESSAGE"
-        }
-
-        init {
-            EXTRA_MESSAGE = "EXTRA_MESSAGE1"
-        }
-
-        init {
-            EXTRA_MESSAGE1 = "EXTRA_MESSAGE2"
-        }
+    lateinit var viewModel : PlansViewModel
+    companion object{
+        lateinit var ccontext : Context
+    }
+    init {
+        ccontext =this
     }
 
-    private var chipAction: CheckBox? = null
     override fun onCreate(savedInstanceState: Bundle?) {
-        val intent = intent
         super.onCreate(savedInstanceState)
         setContentView(R.layout.plans_creating)
-        chipAction = findViewById<View>(R.id.checkBox) as CheckBox
     }
-
+    lateinit var listViewModel: ListViewModel
     public override fun onStart() {
         super.onStart()
         Timber.i("----------onStart Called.----------")
@@ -90,7 +81,7 @@ class PlansCreating : AppCompatActivity() {
                 val sendIntent = Intent()
                 sendIntent.action = Intent.ACTION_SEND
                 sendIntent.putExtra(
-                    Intent.EXTRA_TEXT, """
+                        Intent.EXTRA_TEXT, """
      I`m 20 years old, living in Chernivtsi, Ukraine. For 
      whole my life i was always interested in Computer 
      Science and tried to understand how to use this 
@@ -123,49 +114,116 @@ class PlansCreating : AppCompatActivity() {
             }
             R.id.exit -> {
                 Timber.i("---------------------------выход из программы------------------------")
-                onDestroy()
+                finish()
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    fun onClick(v: View?) {
-        Timber.i("---------------------------Изменение видимости времени события------------------------")
-        val name = findViewById<TextView>(R.id.textView15)
-        val name1 = findViewById<TextView>(R.id.textView16)
-        val start = findViewById<EditText>(R.id.editTextTime2)
-        val end = findViewById<EditText>(R.id.editTextTime3)
-        if (chipAction!!.isChecked == true) {
-            name.visibility = View.VISIBLE
-            name1.visibility = View.VISIBLE
-            start.visibility = View.VISIBLE
-            end.visibility = View.VISIBLE
-        } else {
-            name.visibility = View.INVISIBLE
-            name1.visibility = View.INVISIBLE
-            start.visibility = View.INVISIBLE
-            end.visibility = View.INVISIBLE
-        }
-    }
-
     fun returning(view: View?) {
         val intent = Intent(this, ListOfPlans::class.java)
         Timber.i("---------------------------Возвращение на страницу распорядка------------------------")
         startActivity(intent)
+        finish()
     }
-    fun GoNext(view: View?) {
+
+    @SuppressLint("SetTextI18n")
+    fun goNext(view: View?) {
+        val eventText: TextView = findViewById(R.id.nameEvent)
+        val time: TextView = findViewById(R.id.timeEvent)
+        val sTime: TextView = findViewById(R.id.startTimeEvent)
+        val eTime: TextView = findViewById(R.id.endTimeEvent)
+        val tname: TextView
+        val ttime: TextView
+        if(time.text != "")
+        {
+            val i:Int = listViewModel.count.value!!
+            when (i) {
+                1->{
+                    tname = findViewById(R.id.mondayText)
+                    tname.text = eventText.text
+                    ttime = findViewById(R.id.mondayTime)
+                    ttime.text ="Початок: "+sTime.text.toString()+"\n"+"Кінець: "+ eTime.text.toString()
+                }
+                2->{tname = findViewById(R.id.mondayText)
+                    tname.text = eventText.text
+                    ttime = findViewById(R.id.mondayTime)
+                    ttime.text = "Час події: "+time.text.toString()
+                }
+                3->{tname = findViewById(R.id.mondayText)
+                    tname.text = eventText.text
+                    ttime = findViewById(R.id.mondayTime)
+                    ttime.text = "Час події: "+time.text.toString()
+                }
+                4->{tname = findViewById(R.id.mondayText)
+                    tname.text = eventText.text
+                    ttime = findViewById(R.id.mondayTime)
+                    ttime.text = "Час події: "+time.text.toString()
+                }
+                5->{tname = findViewById(R.id.mondayText)
+                    tname.text = eventText.text
+                    ttime = findViewById(R.id.mondayTime)
+                    ttime.text = "Час події: "+time.text.toString()
+                }
+                6->{tname = findViewById(R.id.mondayText)
+                    tname.text = eventText.text
+                    ttime = findViewById(R.id.mondayTime)
+                    ttime.text = "Час події: "+time.text.toString()
+                }
+                7->{tname = findViewById(R.id.mondayText)
+                    tname.text = eventText.text
+                    ttime = findViewById(R.id.mondayTime)
+                    ttime.text = "Час події: "+time.text.toString()
+                }
+            }
+        }
+        else
+        {
+            val i:Int = listViewModel.count.value!!
+            when (i) {
+                1->{
+                    tname = findViewById(R.id.mondayText)
+                    tname.text = eventText.text
+                    ttime = findViewById(R.id.mondayTime)
+                    ttime.text ="Початок: "+sTime.text.toString()+"\n"+"Кінець: "+ eTime.text.toString()
+                }
+                2->{tname = findViewById(R.id.tuesdayText)
+                    tname.text = eventText.text
+                    ttime = findViewById(R.id.tuesdayTime)
+                    ttime.text ="Початок: "+sTime.text.toString()+"\n"+"Кінець: "+ eTime.text.toString()
+                }
+                3->{tname = findViewById(R.id.wednesdayText)
+                    tname.text = eventText.text
+                    ttime = findViewById(R.id.wednesdayTime)
+                    ttime.text ="Початок: "+sTime.text.toString()+"\n"+"Кінець: "+ eTime.text.toString()
+                }
+                4->{tname = findViewById(R.id.thursdayText)
+                    tname.text = eventText.text
+                    ttime = findViewById(R.id.thursdayTime)
+                    ttime.text ="Початок: "+sTime.text.toString()+"\n"+"Кінець: "+ eTime.text.toString()
+                }
+                5->{tname = findViewById(R.id.fridayText)
+                    tname.text = eventText.text
+                    ttime = findViewById(R.id.fridayTime)
+                    ttime.text ="Початок: "+sTime.text.toString()+"\n"+"Кінець: "+ eTime.text.toString()
+                }
+                6->{tname = findViewById(R.id.saturdayText)
+                    tname.text = eventText.text
+                    ttime = findViewById(R.id.saturdayTime)
+                    ttime.text ="Початок: "+sTime.text.toString()+"\n"+"Кінець: "+ eTime.text.toString()
+                }
+                7->{tname = findViewById(R.id.sundayText)
+                    tname.text = eventText.text
+                    ttime = findViewById(R.id.sundayTime)
+                    ttime.text ="Початок: "+sTime.text.toString()+"\n"+"Кінець: "+ eTime.text.toString()
+                }
+            }
+        }
         val intent = Intent(this, ListOfPlans::class.java)
-        val editText = findViewById<EditText>(R.id.NameOfAction)
-        val message_name = editText.text.toString()
-        intent.putExtra(EXTRA_MESSAGE, message_name)
-        val time = findViewById<EditText>(R.id.editTextTime)
-        val message_time = time.text.toString()
-        intent.putExtra(EXTRA_MESSAGE1, message_time)
-        // Получае текст данного текстового поля
-        // Добавляем с помощью свойства putExtra объект - первый параметр - ключ,
-        // второй параметр - значение этого объекта
         Timber.i("---------------------------Добавление пункта в распорядок------------------------")
         startActivity(intent)
+        finish()
     }
-}
+
+    }

@@ -12,13 +12,11 @@ import viktor.braus.kplanner.R
 
 
 class main_Information_about_program() : AppCompatActivity(){
-    var Use: ListOfPlans? = null
-    var User: String? =null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.about_program)
     }
-
     public override fun onStart() {
         super.onStart()
         Timber.i("----------onStart Called.----------")
@@ -48,7 +46,6 @@ class main_Information_about_program() : AppCompatActivity(){
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         when (id) {
@@ -96,7 +93,7 @@ class main_Information_about_program() : AppCompatActivity(){
                 return true
             }
             R.id.exit -> {
-                onDestroy()
+                finish()
                 return true
             }
         }

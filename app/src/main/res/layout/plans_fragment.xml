@@ -1,179 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"><data>
+        <variable
+            name="plansviewmodel"
+            type="viktor.braus.kplanner.plans.PlansViewModel"/>
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/abstrakciya_cvet_ugol_fon_1087"
-    android:theme="@style/AppTheme"
-    tools:context=".plans.PlansCreating">
+    android:theme="@style/AppTheme">
 
-    <TextView
-        android:id="@+id/textView12"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:gravity="center"
-        android:text="@string/Zagolovok"
-        android:textColor="#FFFFFF"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/NameOf"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-    <EditText
-        android:id="@+id/NameOfAction"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/Plain"
-        android:inputType="textPersonName"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
-
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/Time"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NameOfAction" />
-
-    <EditText
-        android:id="@+id/editTextTime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/Timen"
-        android:inputType="time"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
-    <CheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:button="@android:drawable/checkbox_off_background"
-        android:checked="false"
-        android:onClick="onClick"
-        android:text="@string/Timenn"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/textView15"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="140dp"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:text="@string/Start"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/textView16"
-        app:layout_constraintEnd_toStartOf="@+id/editTextTime2"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextTime2"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <EditText
-        android:id="@+id/editTextTime2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="132dp"
-        android:ems="10"
-        android:hint="@string/StartOfAction"
-        android:importantForAutofill="no"
-        android:inputType="time"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTime" />
-
-    <EditText
-        android:id="@+id/editTextTime3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/EndOfAction"
-        android:importantForAutofill="no"
-        android:inputType="time"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"
-        android:textSize="18sp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/button10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTime2"
-        app:layout_constraintVertical_bias="0.422" />
-
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="140dp"
-        android:layout_height="30dp"
-        android:gravity="center"
-        android:text="@string/End"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextTime3"
-        app:layout_constraintEnd_toStartOf="@+id/editTextTime3"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextTime3"
-        app:layout_constraintVertical_bias="0.466" />
-
-    <Button
-        android:id="@+id/button10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="#673AB7"
-        android:gravity="center"
-        android:onClick="returning"
-        android:text="Повернутись"
-        android:textColor="#8BC34A"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
-    <Button
-        android:id="@+id/button11"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="#673AB7"
-        android:gravity="center"
-        android:onClick="GoNext"
-        android:text="Прийняти"
-        android:textColor="#8BC34A"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/eventPlans"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:text="@string/Zagolovok"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/nameTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/NameOf"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/eventPlans" />
+
+            <EditText
+                android:id="@+id/nameEvent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:ems="10"
+                android:text="@{plansviewmodel.eventName}"
+                android:hint="@string/Plain"
+                android:inputType="textPersonName"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFFFF"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nameTitle" />
+
+            <TextView
+                android:id="@+id/timeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/Time"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:visibility="@{plansviewmodel.mainTime}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nameEvent" />
+
+            <Button
+                android:id="@+id/timeButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:background="#673AB7"
+                android:onClick="@{() -> plansviewmodel.time1()}"
+                android:text="Обрати час"
+                android:textColor="#8BC34A"
+                android:visibility="@{plansviewmodel.mainTime}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timeTitle" />
+
+            <Button
+                android:id="@+id/timeStartButton"
+                android:layout_width="36dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="4dp"
+                android:background="#FDFDFD"
+                android:backgroundTint="#46C148"
+                android:foreground="@drawable/ic_time_button"
+                android:onClick="@{() -> plansviewmodel.time2()}"
+                android:textColor="#8BC34A"
+                android:visibility="@{plansviewmodel.additionaltime}"
+                app:layout_constraintStart_toEndOf="@+id/startTitle"
+                app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+
+            <Button
+                android:id="@+id/timeEndButton"
+                android:layout_width="36dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
+                android:background="#FDFDFD"
+                android:backgroundTint="#46C148"
+                android:foreground="@drawable/ic_time_button"
+                android:onClick="@{() -> plansviewmodel.time3()}"
+                android:textColor="#8BC34A"
+                android:visibility="@{plansviewmodel.additionaltime}"
+                app:layout_constraintStart_toEndOf="@+id/endTitle"
+                app:layout_constraintTop_toBottomOf="@+id/timeStartButton" />
+
+            <TextView
+                android:id="@+id/timeEvent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{plansviewmodel.textTime}"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#888888"
+                android:textSize="24sp"
+                android:visibility="@{plansviewmodel.mainTime}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timeTitle" />
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:buttonTint="#E800FFE1"
+                android:checked="@{plansviewmodel.editTime}"
+                android:onClick="@{() -> plansviewmodel.monitor()}"
+                android:scrollbarThumbHorizontal="@android:drawable/checkbox_on_background"
+                android:text="@string/Timenn"
+                android:textColor="#FFFFFF"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timeButton" />
+            <!--  -->
+
+            <TextView
+                android:id="@+id/startTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="@string/Start"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:visibility="@{plansviewmodel.additionaltime}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+
+            <TextView
+                android:id="@+id/startTimeEvent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="72dp"
+                android:text="@{plansviewmodel.textStartTime}"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFFFF"
+                android:textSize="24dp"
+                android:visibility="@{plansviewmodel.additionaltime}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/timeStartButton"
+                app:layout_constraintTop_toBottomOf="@+id/timeButton" />
+
+            <TextView
+                android:id="@+id/endTimeEvent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{plansviewmodel.textStopTime}"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFFFF"
+                android:textSize="24dp"
+                android:visibility="@{plansviewmodel.additionaltime}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.501"
+                app:layout_constraintStart_toEndOf="@+id/timeEndButton"
+                app:layout_constraintTop_toBottomOf="@+id/startTimeEvent" />
+
+            <TextView
+                android:id="@+id/endTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="@string/End"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:visibility="@{plansviewmodel.additionaltime}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/startTitle" />
+
+            <Button
+                android:id="@+id/bavckWard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:layout_marginBottom="16dp"
+                android:background="#673AB7"
+                android:gravity="center"
+                android:onClick="returning"
+                android:text="Повернутись"
+                android:textColor="#8BC34A"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/accept"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/accept"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
+                android:background="#673AB7"
+                android:gravity="center"
+                android:onClick="@{plansviewmodel.planning}"
+                android:text="Прийняти"
+                android:textColor="#8BC34A"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

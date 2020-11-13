@@ -8,11 +8,14 @@ import androidx.lifecycle.ViewModel
 class AboutViewModel(a:String,b:String,c:String,d:String) : ViewModel()
 {
     var counter: Int = 0
-    var cd: Array<String> = arrayOf(a,b,c,d)
-    private val _eventAbout = MutableLiveData<Boolean>()
+    private var cd: Array<String> = arrayOf(a,b,c,d)
+    private var cdq = MutableLiveData<String>()
+            val _cdq : LiveData<String>
+            get()=cdq
+    private var _eventAbout = MutableLiveData<Boolean>()
     val eventAbout: LiveData<Boolean>
         get()=_eventAbout
-    private val _nameOfPhotos = MutableLiveData<Array<String>>()
+    private var _nameOfPhotos = MutableLiveData<Array<String>>()
     val nameOfPhotos: LiveData<Array<String>>
         get()=_nameOfPhotos
     init {
@@ -25,7 +28,6 @@ class AboutViewModel(a:String,b:String,c:String,d:String) : ViewModel()
         {
             _nameOfPhotos.value = arrayOf("First", "Second", "Third", "Fourth")
             return _nameOfPhotos.value.toString()
-
         }
         else
         {

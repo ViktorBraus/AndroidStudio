@@ -8,10 +8,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import viktor.braus.kplanner.mainPage.MainActivity
 import viktor.braus.kplanner.timer.TTimer
+
 private val CORRECT_BUZZ_PATTERN = longArrayOf(100, 100, 100, 100, 100, 100)
 private val PANIC_BUZZ_PATTERN = longArrayOf(0, 200)
 private val GAME_OVER_BUZZ_PATTERN = longArrayOf(0, 2000)
 private val NO_BUZZ_PATTERN = longArrayOf(0)
+
 class InformationViewModel() : ViewModel() {
     //var username: String? = null
         enum class BuzzType(val pattern: LongArray) {
@@ -62,7 +64,6 @@ class InformationViewModel() : ViewModel() {
         val date: String = df.format(Calendar.getInstance().getTime())
         if(TTimer.secondsCountTotal<20)
         {
-
             _username.value = MainActivity.S
             _getT.value = "Текущее имя пользователя: ${_username.value}\n$date"
             return _getT.value.toString()

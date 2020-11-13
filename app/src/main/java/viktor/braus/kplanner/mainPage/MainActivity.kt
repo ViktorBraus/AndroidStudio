@@ -1,26 +1,30 @@
 package viktor.braus.kplanner.mainPage
 
+import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import timber.log.Timber
+import viktor.braus.kplanner.R
 import viktor.braus.kplanner.menu.factoryMethod.About_activity
-import viktor.braus.kplanner.menu.viewModel.InformationViewModel
 import viktor.braus.kplanner.menu.viewModel.main_Information_about_program
 import viktor.braus.kplanner.plans.ListOfPlans
-import viktor.braus.kplanner.R
 import viktor.braus.kplanner.timer.TTimer
+import java.util.*
+
 
 //"Перейшов на мову Kotlin, 5 Лабораторна робота"
 class MainActivity : AppCompatActivity() {
     var TTimer: TTimer = TTimer()
-    var User: InformationViewModel? = null
-
+    var currentDateTime: TextView? = null
+    var dateAndTime = Calendar.getInstance()
     companion object {
+
         var EXTR: String? = null
         var K_REV: String? = null
         var S: String? = null
@@ -69,7 +73,6 @@ class MainActivity : AppCompatActivity() {
         Timber.i("----------onDestroy Called.----------")
         TTimer.stopTimerTotal()
     }
-
     override fun onResume() {
         super.onResume()
         TTimer.startTimerFocused()
@@ -104,8 +107,8 @@ class MainActivity : AppCompatActivity() {
                 val sendIntent = Intent()
                 sendIntent.action = Intent.ACTION_SEND
                 sendIntent.putExtra(
-                    Intent.EXTRA_TEXT,
-                    """
+                        Intent.EXTRA_TEXT,
+                        """
                 I`m 20 years old, living in Chernivtsi, Ukraine. For 
                 whole my life i was always interested in Computer 
                 Science and tried to understand how to use this 
@@ -144,20 +147,17 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
     fun sendMessage(view: View) {
+
         // действия, совершаемые после нажатия на кнопку
         // Создаем объект Intent для вызова новой Activity
+
         val intent = Intent(this, ListOfPlans::class.java)
-        val intent1 = Intent(this, InformationViewModel::class.java)
         // Получаем текстовое поле в текущей Activity
         val editText = findViewById<View>(R.id.edit_message) as EditText
         // Получае текст данного текстового поля
         var message = editText.text.toString()
-        // Добавляем с помощью свойства putExtra объект - первый параметр - ключ,
-        // второй параметр - значение этого объекта
-        intent.putExtra(EXTR, message)
-        intent1.putExtra(EXTR, message)
-        // запуск activity
         startActivity(intent)
         Timber.plant()
         Timber.i("------------------sendmessage method used--------------------")
@@ -165,7 +165,9 @@ class MainActivity : AppCompatActivity() {
         Timber.i("Имя пользователя, которое было отправлено: $message")
 
     }
-    fun Exit(view: View) {
-        onDestroy()
+    fun Exit(view: View)
+    {
+        finishAffinity()
     }
+
 }

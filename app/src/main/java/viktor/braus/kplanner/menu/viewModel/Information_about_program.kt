@@ -62,11 +62,12 @@ class Information_about_program() : Fragment(){
         //val rootView = inflater.inflate(R.layout.about_program_fragment, container, false)
         viewModel = ViewModelProvider(this).get(InformationViewModel::class.java)
         binding.informationViewModel = viewModel
-        binding.setLifecycleOwner(this)
-        viewModel.eventTimedzz.observe(viewLifecycleOwner, Observer { hasCounted->
-            if(hasCounted)
+        binding.lifecycleOwner = this
+        viewModel.eventTimedzz.observe(viewLifecycleOwner, Observer { hasCounted ->
+            if (hasCounted)
                 TimerDzz()
-                })
+        })
+
         viewModel.eventBuzz.observe(viewLifecycleOwner, Observer { buzzType ->
             if (buzzType != InformationViewModel.BuzzType.NO_BUZZ) {
                 buzz(buzzType.pattern)
@@ -75,11 +76,13 @@ class Information_about_program() : Fragment(){
         })
         return binding.root
     }
+
     fun TimerDzz()//event для таймера, когда он посчитает больше 20 сек
     {
-        Toast.makeText(this.activity,"Таймер посчитал 20!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this.activity, "Таймер посчитал 20!", Toast.LENGTH_SHORT).show()
         viewModel.timerCounted()
     }
+
     private fun buzz(pattern: LongArray) {
         val buzzer = activity?.getSystemService<Vibrator>()
         buzzer?.let {

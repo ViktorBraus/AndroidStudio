@@ -5,17 +5,16 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import viktor.braus.kplanner.plans.ListOfPlans
-import viktor.braus.kplanner.R
 import timber.log.Timber
+import viktor.braus.kplanner.R
 import viktor.braus.kplanner.menu.viewModel.main_Information_about_program
+import viktor.braus.kplanner.plans.ListOfPlans
 
 class About_activity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.about)
     }
-
     public override fun onStart() {
         super.onStart()
         Timber.i("----------onStart Called.----------")
@@ -59,7 +58,7 @@ class About_activity : AppCompatActivity() {
                 val sendIntent = Intent()
                 sendIntent.action = Intent.ACTION_SEND
                 sendIntent.putExtra(
-                    Intent.EXTRA_TEXT, """
+                        Intent.EXTRA_TEXT, """
      I`m 20 years old, living in Chernivtsi, Ukraine. For 
      whole my life i was always interested in Computer 
      Science and tried to understand how to use this 
@@ -92,7 +91,7 @@ class About_activity : AppCompatActivity() {
             }
             R.id.exit -> {
                 Timber.i("---------------------------выход из программы------------------------")
-                onDestroy()
+                finish()
                 return true
             }
         }

@@ -21,11 +21,7 @@ class About_Fragment : Fragment() {
     private lateinit var viewModel: AboutViewModel
     private lateinit var viewModelFactory: AboutViewModelFactory
     private lateinit var binding: AboutFragmentBinding
-    var nameOfPhotos: Array<String> = arrayOf("First","Second","Third","Fourth")
-    companion object
-    {
-    var counter: Int = 0
-    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,33 +32,12 @@ class About_Fragment : Fragment() {
             container,
             false
         )
-        //val rootView = inflater.inflate(R.layout.about_fragment, container, false)
         viewModelFactory = AboutViewModelFactory("First","Second","Third","Fourth")
         viewModel = ViewModelProvider(this, viewModelFactory)
                 .get(AboutViewModel::class.java)
         binding.aboutViewModel = viewModel
-        /*val button1: Button = rootView.findViewById(R.id.button14)
-        val uP1: TextView = rootView.findViewById(R.id.textView23)
-        val uP2: TextView = rootView.findViewById(R.id.textView24)
-        val uP3: TextView = rootView.findViewById(R.id.textView25)
-        val uP4: TextView = rootView.findViewById(R.id.textView26)*/
+        binding.lifecycleOwner = this
 
-
-        //спросить за то, как записывать массив с помощью обзервер
-        /*viewModel.nameOfPhotos.observe(viewLifecycleOwner, Observer { newScore ->
-            uP1.text = nameOfPhotos.get(0)
-            uP2.text = nameOfPhotos.get(1)
-            uP3.text = nameOfPhotos.get(2)
-            uP4.text = nameOfPhotos.get(3)
-        })*/
-        /*button1.setOnClickListener {
-            uP1.text = nameOfPhotos.get(0)
-            uP2.text = nameOfPhotos.get(1)
-            uP3.text = nameOfPhotos.get(2)
-            uP4.text = nameOfPhotos.get(3)
-            viewModel.Count_of_Click()
-            counter++
-        }*/
         viewModel.nameOfPhotos.observe(viewLifecycleOwner, Observer { p ->
                 binding.textView23.text = viewModel.nameOfPhotos.value?.get(0) ?: ""
                 binding.textView24.text = viewModel.nameOfPhotos.value?.get(1) ?: ""
