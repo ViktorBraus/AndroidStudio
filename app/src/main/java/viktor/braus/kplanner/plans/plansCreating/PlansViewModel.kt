@@ -1,38 +1,36 @@
-package viktor.braus.kplanner.plans
-
-
+package viktor.braus.kplanner.plans.plansCreating
 
 import android.annotation.SuppressLint
+import android.app.Application
 import android.app.TimePickerDialog
-import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.*
 import timber.log.Timber
-import viktor.braus.kplanner.R
-import java.sql.Time
+import viktor.braus.kplanner.entity.PlansDAO
+import viktor.braus.kplanner.mainPage.MainActivity
+import viktor.braus.kplanner.plans.listOfPlans.ListFragment
+import viktor.braus.kplanner.plans.listOfPlans.ListViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-
-class PlansViewModel(context: Context) : ViewModel() {
-
-    private lateinit var viewModel: ListFragment
+class PlansViewModel(application: Application,
+                     val plansDAO: PlansDAO) : AndroidViewModel(application) {
+    //private var viewModel: ListViewModel = ListViewModel(context)
     val cal = Calendar.getInstance()
-    var con: Context = context
+    var con: Application=application
+    private var _time = MutableLiveData<String>()
+    val time: LiveData<String>
+        get() = _time
     var counter: Boolean = true
+    var _j = MutableLiveData<Int>()
+    val j: LiveData<Int>
+        get() = _j
     private val _count = MutableLiveData<Int>()
     val count: LiveData<Int>
         get() = _count
-
     /////////////////////////////////////////////////////       для записи значений имени и времени события
-    private var _nameEvent = MutableLiveData<String>()
-    val nameEvent: LiveData<String>
-        get() = _nameEvent
+
     private var _timeEvent = MutableLiveData<String>()
     val timeEvent: LiveData<String>
         get() = _timeEvent
@@ -53,10 +51,12 @@ class PlansViewModel(context: Context) : ViewModel() {
     private var _textStopTime = MutableLiveData<String>()
     val textStopTime: LiveData<String>
         get() = _textStopTime
-    private var _textTime = MutableLiveData<String>()
+    private var _nameEvent = MutableLiveData<String>()
+    val nameEvent: LiveData<String>
+        get() = _nameEvent
+    var _textTime = MutableLiveData<String>()
     val textTime: LiveData<String>
         get() = _textTime
-
     ////////////////////////////////////////////////////////    для изменения видимости
     private val _additionaltime = MutableLiveData<Int>()
     val additionaltime: LiveData<Int>
@@ -69,18 +69,17 @@ class PlansViewModel(context: Context) : ViewModel() {
         get() = _editTime
 
     init {
+        _nameEvent.value="bbbb"
         _count.value = 0
-        _nameEvent.value = "aaa"
-        _eventName.value = "qqq"
         _timeEvent.value = ""
         _timeStart.value = ""
         _timeEnd.value = ""
-        _textTime.value = ""
         _textStartTime.value = ""
         _textStopTime.value = ""
         _mainTime.value = View.VISIBLE
         _additionaltime.value = View.INVISIBLE
     }
+
 
     fun monitor(): Boolean? {
         if (counter) {
@@ -104,11 +103,10 @@ class PlansViewModel(context: Context) : ViewModel() {
         }
     }
 
-    fun setValues(): String {
-        _eventName.value = _eventName.value
-        return _eventName.value.toString()
+    fun update() :String
+    {
+        return _nameEvent.value.toString()
     }
-
     fun setCount(s: Int): Int {
         val i: Int = s
         _count.value = i
@@ -118,15 +116,11 @@ class PlansViewModel(context: Context) : ViewModel() {
     fun changeAppearance() {
         _editTime.value = false
     }
-
-    fun planning(view: View?) {
-    viewModel = ListFragment()
-        if (_textTime.value != "")
-        {
-            val i: Int = viewModel.i
-            when (i) {
+    fun planning() {
+        if (textTime.value != "") {
+            when (ListViewModel.S) {
                 1 -> {
-                    _nameEvent.value = _eventName.value
+                   // _nameEvent.value = _eventName.value
                     _timeEvent.value = "Час події: " + _textTime.value
                 }
                 2 -> {
@@ -158,14 +152,13 @@ class PlansViewModel(context: Context) : ViewModel() {
                 }
             }
         }
-            //ttime.text ="Початок: "+sTime.text.toString()+"\n"+"Кінець: "+ eTime.text.toString()
             else
         {
-                val i: Int = viewModel.i
-                when (i)
+            when (ListViewModel.S)
                 {
                     1 ->
                     {
+                        Timber.i("textTime eeeis: ${textTime.value}")
                         _nameEvent.value = _eventName.value
                         _timeEvent.value = "Початок: "+textStartTime.value+"\n"+"Кінець: "+textStopTime.value
                     }
@@ -205,40 +198,31 @@ class PlansViewModel(context: Context) : ViewModel() {
                     }
                 }
         }
-        goNext(view)
-        val login = Intent(con, ListOfPlans::class.java)
-        Timber.i("zzz${_nameEvent.value}")
-        Timber.i("zzz${_timeEvent.value}")
-        con.startActivity(login)
-    }
-    @SuppressLint("SetTextI18n")
-    fun goNext(view: View?) {
-
-        Timber.i("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
-        _nameEvent.value = _nameEvent.value
-        if(_textTime.value == "")
-        {
-            _nameEvent.value = _eventName.value
-            _timeEvent.value =_textTime.value
-        }
-        else
-        {
-            _nameEvent.value = _eventName.value
-            _timeEvent.value ="Початок: "+_textStartTime.value+"\n"+"Кінець: "+ _textStopTime.value
-        }
+        //goNext(view)
+        Timber.i("Name of event is: ${nameEvent.value}")
+        Timber.i("Time of event is: ${textTime.value}")
+        update()
 
     }
+    //@SuppressLint("SetTextI18n")
+//    fun goNext(view: View?) {
+//
+//        _nameEvent.value = _nameEvent.value
+//        if(textTime.value == "")
+//        {
+//            _nameEvent.value =_nameEvent.value
+//            _textTime.value = _eventName.value
+//
+//        }
+//        else
+//        {
+//            _nameEvent.value = _eventName.value
+//            _timeEvent.value ="Початок: "+_textStartTime.value+"\n"+"Кінець: "+ _textStopTime.value
+//        }
+//
+//    }
     @SuppressLint("SimpleDateFormat")
-    fun time1() {
-                var timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-                    cal.set(Calendar.HOUR_OF_DAY, hour)
-                    cal.set(Calendar.MINUTE, minute)
-                    _textTime.value = SimpleDateFormat().format(cal.time)
-                }
-                TimePickerDialog(con, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
-    }
-    @SuppressLint("SimpleDateFormat")
-    fun time2() {
+    fun time2(view: View?) {
         var timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
             cal.set(Calendar.HOUR_OF_DAY, hour)
             cal.set(Calendar.MINUTE, minute)
@@ -248,7 +232,7 @@ class PlansViewModel(context: Context) : ViewModel() {
 
     }
     @SuppressLint("SimpleDateFormat")
-    fun time3() {
+    fun time3(view: View?) {
         var timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
             cal.set(Calendar.HOUR_OF_DAY, hour)
             cal.set(Calendar.MINUTE, minute)
@@ -256,4 +240,96 @@ class PlansViewModel(context: Context) : ViewModel() {
         }
         TimePickerDialog(con, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
     }
+
+    /////////////////Coroutine//////////////////////////////
+    /*private val viewModelJob = Job()
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
+    private val uiScope = CoroutineScope(Dispatchers.Main+viewModelJob)
+    private var _nameEvent = MutableLiveData<String>()
+    val nameEvent: LiveData<String>
+        get() = _nameEvent
+    private var _textTime = MutableLiveData<String>()
+    val textTime: LiveData<String>
+        get() = _textTime
+    private var plan = MutableLiveData<Plans?>()
+    private val plans = plansDAO.getAllPlans()
+    init
+    {
+        _nameEvent.value="bbbb"
+        _textTime.value=""
+    initializePlans()
+    }
+    private fun initializePlans()
+    {
+        uiScope.launch {
+            plan.value = getPlanFromDb()
+        }
+    }
+    private suspend fun getPlanFromDb():Plans?
+    {
+        var planning = plansDAO.getAll()
+        if (planning?.EventName == "") {
+            planning.EventName = nameEvent.value.toString()
+            planning.Time = textTime.value.toString()
+        }
+        return planning
+    }
+    fun onStartTracking()
+    {
+        uiScope.launch {
+            val newPlan = Plans()
+            insert(newPlan)
+            plan.value = getPlanFromDb()
+        }
+        val login = Intent(con, ListOfPlans::class.java)
+        update()
+        Timber.i("Name of event is: ${nameEvent.value}")
+        Timber.i("Time of event is: ${textTime.value}")
+        con.startActivity(login)
+    }
+
+    private suspend fun insert(plan:Plans)
+    {
+        withContext(Dispatchers.IO)
+        {
+            plansDAO.insert(plan)
+        }
+    }
+    private suspend fun update(plan:Plans)
+    {
+        withContext(Dispatchers.IO)
+        {
+            plansDAO.update(plan)
+        }
+    }
+    suspend fun clear()
+    {
+        withContext(Dispatchers.IO)
+        {
+            plansDAO.clear()
+        }
+    }
+    fun onClear()
+    {
+        uiScope.launch {
+            clear()
+            plan.value = null
+        }
+    }
+    fun onStopTracking()
+    {
+        uiScope.launch {
+            var oldPlan = plan.value ?: return@launch
+            oldPlan.EventName = nameEvent.value.toString()
+            oldPlan.EventName = textTime.value.toString()
+            update(oldPlan)
+        }
+    }
+    fun formatPlans()
+    {
+
+    }*/
 }

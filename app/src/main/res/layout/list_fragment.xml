@@ -5,10 +5,10 @@
 <data>
         <variable
             name="listViewModel"
-            type="viktor.braus.kplanner.plans.ListViewModel"/>
-    <variable
+            type="viktor.braus.kplanner.plans.listOfPlans.ListViewModel"/>
+         <variable
         name="plansViewModel"
-        type="viktor.braus.kplanner.plans.PlansViewModel"/>
+        type="viktor.braus.kplanner.plans.plansCreating.PlansViewModel"/>
 </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/abstrakciya_cvet_ugol_fon_1087"
                 android:columnCount="3"
-                tools:context=".plans.ListOfPlans">
+                tools:context=".plans.listOfPlans.ListFragment">
 
                 <TextView
                     android:id="@+id/name"
@@ -40,7 +40,7 @@
                     android:layout_column="1"
                     android:layout_gravity="center|fill"
                     android:gravity="center"
-                    android:text="@{plansViewModel.setValues}"
+                    android:text="@{listViewModel.showUser}"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -65,7 +65,7 @@
                     android:layout_row="2"
                     android:layout_column="0"
                     android:layout_gravity="fill"
-                    android:text="@{listViewModel.nameEvent}"
+                    android:text="@{plansViewModel.nameEvent}"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp" />
 
@@ -76,7 +76,7 @@
                     android:layout_row="2"
                     android:layout_column="1"
                     android:layout_gravity="fill"
-                    android:text="@{listViewModel.timeEvent}"
+                    android:text="@{plansViewModel.textTime}"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp" />
 
@@ -90,7 +90,7 @@
                     android:background="#673AB7"
                     android:clickable="true"
                     android:minHeight="28dip"
-                    android:onClick="@{listViewModel.Mondayplanning}"
+                    android:onClick="Planning"
                     android:text="@string/NewAction"
                     android:textColor="#8BC34A"
                     android:textSize="12sp" />
@@ -133,7 +133,7 @@
                     android:layout_column="2"
                     android:background="#673AB7"
                     android:minHeight="28dip"
-                    android:onClick="@{listViewModel.Tuesdayplanning}"
+                    android:onClick="Planning"
                     android:text="@string/NewAction"
                     android:textColor="#8BC34A"
                     android:textSize="12sp" />
@@ -176,7 +176,7 @@
                     android:layout_column="2"
                     android:background="#673AB7"
                     android:minHeight="28dip"
-                    android:onClick="@{listViewModel.Wednesdayplanning}"
+                    android:onClick="Planning"
                     android:text="@string/NewAction"
                     android:textColor="#8BC34A"
                     android:textSize="12sp" />
@@ -219,7 +219,7 @@
                     android:layout_column="2"
                     android:background="#673AB7"
                     android:minHeight="28dip"
-                    android:onClick="@{listViewModel.Thursdayplanning}"
+                    android:onClick="Planning"
                     android:text="@string/NewAction"
                     android:textColor="#8BC34A"
                     android:textSize="12sp" />
@@ -262,7 +262,7 @@
                     android:layout_column="2"
                     android:background="#673AB7"
                     android:minHeight="28dip"
-                    android:onClick="@{listViewModel.Fridayplanning}"
+                    android:onClick="Planning"
                     android:text="@string/NewAction"
                     android:textColor="#8BC34A"
                     android:textSize="12sp" />
@@ -318,7 +318,7 @@
                     android:layout_column="2"
                     android:background="#673AB7"
                     android:minHeight="28dip"
-                    android:onClick="@{listViewModel.Saturdayplanning}"
+                    android:onClick="Planning"
                     android:text="@string/NewAction"
                     android:textColor="#8BC34A"
                     android:textSize="12sp" />
@@ -361,7 +361,7 @@
                     android:layout_column="2"
                     android:background="#673AB7"
                     android:minHeight="28dip"
-                    android:onClick="@{listViewModel.Sundayplanning}"
+                    android:onClick="Planning"
                     android:text="@string/NewAction"
                     android:textColor="#8BC34A"
                     android:textSize="12sp" />

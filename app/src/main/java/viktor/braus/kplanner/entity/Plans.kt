@@ -9,7 +9,7 @@ data class Plans(
         @PrimaryKey(autoGenerate = true)
     var EventID: Long = 0L,
         @ColumnInfo(name = "Name of Event")
-    val EventName: String = "",
+        var EventName: String = "",
         @ColumnInfo(name = "Time of Event")
     var Time: String = "",
         @ColumnInfo(name = "Time Start")

@@ -1,6 +1,7 @@
 package viktor.braus.kplanner.mainPage
 
-import android.app.PendingIntent
+import android.annotation.SuppressLint
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -11,43 +12,44 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import timber.log.Timber
 import viktor.braus.kplanner.R
-import viktor.braus.kplanner.menu.factoryMethod.About_activity
-import viktor.braus.kplanner.menu.viewModel.main_Information_about_program
-import viktor.braus.kplanner.plans.ListOfPlans
+import viktor.braus.kplanner.entity.PlansDatabase
+import viktor.braus.kplanner.menu.factoryMethod.About_Fragment
+import viktor.braus.kplanner.menu.viewModel.Information_fragment
+import viktor.braus.kplanner.plans.listOfPlans.ListFragment
+import viktor.braus.kplanner.plans.plansCreating.PlansFragment
+import viktor.braus.kplanner.plans.plansCreating.PlansViewModel
 import viktor.braus.kplanner.timer.TTimer
+import java.text.SimpleDateFormat
 import java.util.*
 
 
 //"Перейшов на мову Kotlin, 5 Лабораторна робота"
 class MainActivity : AppCompatActivity() {
+    var fragment = MainFragment()
     var TTimer: TTimer = TTimer()
-    var currentDateTime: TextView? = null
-    var dateAndTime = Calendar.getInstance()
+    var time: String? = null
     companion object {
-
-        var EXTR: String? = null
         var K_REV: String? = null
         var S: String? = null
     }
         var revenue = 0
     init
     {
-        EXTR = "EXTRA_MESSAGE"
-    }
-    init
-    {
         K_REV = "k_rev"
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_page)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.main_container, fragment)
+            .addToBackStack(null)
+            .commit()
         Timber.i("---------------------------onCreate Called.------------------------")
         TTimer.startTimerTotal()
         if (savedInstanceState != null) {
             revenue = savedInstanceState.getInt(K_REV, 1)
         }
-
     }
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
@@ -87,28 +89,35 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         when (id) {
             R.id.open_activity -> {
-                val intent = Intent(this, ListOfPlans::class.java)
                 Timber.i("---------------------------Активирован пункт меню открытия распорядка дня------------------------")
-                startActivity(intent)
+                var fragment = ListFragment()
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.main_container, fragment)
+                    .addToBackStack(null)
+                    .commit()
                 return true
             }
             R.id.about -> {
-                intent = Intent(this, About_activity::class.java)
+                var fragment = About_Fragment()
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.main_container, fragment)
+                    .addToBackStack(null)
+                    .commit()
                 Timber.i("---------------------------Активирован пункт меню про разработчика------------------------")
-                startActivity(intent)
                 return true
             }
             R.id.Rules -> {
                 val sendIntent = Intent()
                 sendIntent.action = Intent.ACTION_SEND
                 sendIntent.putExtra(
-                        Intent.EXTRA_TEXT,
-                        """
+                    Intent.EXTRA_TEXT,
+                    """
                 I`m 20 years old, living in Chernivtsi, Ukraine. For 
                 whole my life i was always interested in Computer 
                 Science and tried to understand how to use this 
@@ -134,7 +143,12 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
             R.id.information -> {
-                intent = Intent(this, main_Information_about_program::class.java)
+                var fragment = Information_fragment()
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.main_container, fragment)
+                    .addToBackStack(null)
+                    .commit()
                 Timber.i("---------------------------Активирован пункт меню про программу------------------------")
                 startActivity(intent)
                 return true
@@ -149,25 +163,131 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun sendMessage(view: View) {
-
-        // действия, совершаемые после нажатия на кнопку
-        // Создаем объект Intent для вызова новой Activity
-
-        val intent = Intent(this, ListOfPlans::class.java)
-        // Получаем текстовое поле в текущей Activity
         val editText = findViewById<View>(R.id.edit_message) as EditText
-        // Получае текст данного текстового поля
         var message = editText.text.toString()
-        startActivity(intent)
         Timber.plant()
         Timber.i("------------------sendmessage method used--------------------")
         S = message
         Timber.i("Имя пользователя, которое было отправлено: $message")
-
+        var fragment = ListFragment()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.main_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
     fun Exit(view: View)
     {
         finishAffinity()
+    }
+    fun BackWard(view: View?) {
+        Timber.i("---------------------------Возвращение на главный экран------------------------")
+        var fragment : MainFragment  = MainFragment()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.main_container, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+    fun returning(view: View?) {
+        val dataSource = PlansDatabase.getInstance(application).plansDAO
+        Timber.i("---------------------------Возвращение на страницу распорядка------------------------")
+        var fragment = ListFragment()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.main_container, fragment)
+            .addToBackStack(null)
+            .commit()
+        PlansViewModel(application, dataSource).planning()
+    }
+
+    @SuppressLint("SetTextI18n")
+    fun goNext(view: View?) {
+
+    }
+    fun Planning(view: View?) {
+        Timber.i("---------------------------Активировано действие перехода на создание плана------------------------")
+        var fragment = PlansFragment()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.main_container, fragment)
+            .addToBackStack(null)
+            .commit()
+
+    }
+//    @SuppressLint("SimpleDateFormat")
+//    fun time1(view: View?)
+//    {
+//        val cal = Calendar.getInstance()
+//        var con = PlansFragment().activity
+//        val dataSource = PlansDatabase.getInstance(application).plansDAO
+//        TimePickerDialog(
+//            con,
+//            PlansViewModel(application, dataSource).timeSetListener, cal.get(Calendar.HOUR_OF_DAY
+//            ), cal.get(Calendar.MINUTE), true
+//        ).show()
+//        PlansViewModel(application, dataSource).time1()
+//    }
+    @SuppressLint("SimpleDateFormat", "SetTextI18n")
+    fun setTime(v: View)
+    {
+        val id = v.id
+        if(id == R.id.timeButton) {
+            val cal = Calendar.getInstance()
+            var timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                cal.set(Calendar.HOUR_OF_DAY, hour)
+                cal.set(Calendar.MINUTE, minute)
+                var t: TextView = findViewById(R.id.timeEvent)
+                t.text = SimpleDateFormat().format(cal.time)
+                //_time.value = cal.get(Calendar.HOUR_OF_DAY).toString()+":"+cal.get(Calendar.MINUTE).toString()
+                //_textTime.value = SimpleDateFormat().format(cal.time)
+                //_textTime.value = time.value
+                //Timber.i("asasas${textTime.value}")
+            }
+            TimePickerDialog(
+                this@MainActivity, timeSetListener,
+                cal.get(Calendar.HOUR_OF_DAY),
+                cal.get(Calendar.MINUTE), true
+            ).show()
+        }
+        if(id==R.id.timeStartButton)
+        {
+            val cal = Calendar.getInstance()
+            var timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                cal.set(Calendar.HOUR_OF_DAY, hour)
+                cal.set(Calendar.MINUTE, minute)
+                var t: TextView = findViewById(R.id.startTimeEvent)
+                t.text = SimpleDateFormat().format(cal.time)
+                //_time.value = cal.get(Calendar.HOUR_OF_DAY).toString()+":"+cal.get(Calendar.MINUTE).toString()
+                //_textTime.value = SimpleDateFormat().format(cal.time)
+                //_textTime.value = time.value
+                //Timber.i("asasas${textTime.value}")
+            }
+            TimePickerDialog(
+                this@MainActivity, timeSetListener,
+                cal.get(Calendar.HOUR_OF_DAY),
+                cal.get(Calendar.MINUTE), true
+            ).show()
+        }
+        if(id==R.id.timeEndButton)
+        {
+            val cal = Calendar.getInstance()
+            var timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                cal.set(Calendar.HOUR_OF_DAY, hour)
+                cal.set(Calendar.MINUTE, minute)
+                var t: TextView = findViewById(R.id.endTimeEvent)
+                t.text = SimpleDateFormat().format(cal.time)
+                //_time.value = cal.get(Calendar.HOUR_OF_DAY).toString()+":"+cal.get(Calendar.MINUTE).toString()
+                //_textTime.value = SimpleDateFormat().format(cal.time)
+                //_textTime.value = time.value
+                //Timber.i("asasas${textTime.value}")
+            }
+            TimePickerDialog(
+                this@MainActivity, timeSetListener,
+                cal.get(Calendar.HOUR_OF_DAY),
+                cal.get(Calendar.MINUTE), true
+            ).show()
+        }
     }
 
 }

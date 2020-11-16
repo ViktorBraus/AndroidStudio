@@ -12,7 +12,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/abstrakciya_cvet_ugol_fon_1087"
-    tools:context=".menu.viewModel.Information_about_program">
+    tools:context=".menu.viewModel.Information_fragment">
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

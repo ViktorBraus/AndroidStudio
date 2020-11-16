@@ -15,11 +15,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import timber.log.Timber
 import viktor.braus.kplanner.R
-import viktor.braus.kplanner.databinding.AboutProgramFragmentBinding
+import viktor.braus.kplanner.databinding.InformationFragmentBinding
 
-class Information_about_program() : Fragment(){
+class Information_fragment() : Fragment(){
     private lateinit var viewModel: InformationViewModel
-    private lateinit var binding: AboutProgramFragmentBinding
+    private lateinit var binding: InformationFragmentBinding
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -55,7 +55,7 @@ class Information_about_program() : Fragment(){
     ): View? {
         binding=DataBindingUtil.inflate(
                 inflater,
-                R.layout.about_program_fragment,
+                R.layout.information_fragment,
                 container,
                 false
         )

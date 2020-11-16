@@ -12,20 +12,6 @@
         android:roundIcon="@mipmap/icon_v2"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".menu.viewModel.main_Information_about_program"
-            android:noHistory="true"/>
-        <activity
-            android:name=".menu.factoryMethod.About_activity"
-            android:noHistory="true"/>
-        <activity
-            android:noHistory="true"
-            android:name=".plans.PlansCreating"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".plans.ListOfPlans"
-            android:noHistory="true"/>
-        <activity
             android:name=".mainPage.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">

@@ -10,10 +10,10 @@ import androidx.room.Update
 interface PlansDAO {
 
     @Insert
-     fun insert(plans: Plans)
+    fun insert(plans: Plans)
 
     @Update
-     fun update(plans: Plans)
+    fun update(plans: Plans)
 
 
     @Query("SELECT * from Planner WHERE EventID = :key")
@@ -22,8 +22,8 @@ interface PlansDAO {
     @Query("DELETE FROM Planner")
      fun clear()
 
-    @Query("SELECT * FROM Planner"+"ORDER BY EventID DESC")
-    fun getAllPlans(): LiveData<List<Plans>>
+    @Query("SELECT * FROM Planner ORDER BY EventID DESC")
+   fun getAllPlans(): LiveData<List<Plans>>
 
     @Query("SELECT * FROM Planner ORDER BY EventID DESC LIMIT 1")
      fun getAll(): Plans?
