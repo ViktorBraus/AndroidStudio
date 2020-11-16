@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import timber.log.Timber
 import viktor.braus.kplanner.R
@@ -15,7 +16,6 @@ import viktor.braus.kplanner.menu.viewModel.main_Information_about_program
 
 class ListOfPlans : AppCompatActivity(){
 
-    lateinit var viewModel : ListViewModel
     companion object{
     lateinit var ccontext : Context
     }

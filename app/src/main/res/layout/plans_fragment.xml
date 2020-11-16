@@ -5,6 +5,9 @@
         <variable
             name="plansviewmodel"
             type="viktor.braus.kplanner.plans.PlansViewModel"/>
+    <variable
+        name="listViewModel"
+        type="viktor.braus.kplanner.plans.ListViewModel"/>
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -223,7 +226,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/accept"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent" />
-
+            <!--"@{plansviewmodel.planning}"-->
             <Button
                 android:id="@+id/accept"
                 android:layout_width="110dp"

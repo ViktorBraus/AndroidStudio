@@ -1,25 +1,24 @@
 package viktor.braus.kplanner.plans
 
 import android.annotation.SuppressLint
-import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import timber.log.Timber
 import viktor.braus.kplanner.R
 import viktor.braus.kplanner.menu.factoryMethod.About_activity
 import viktor.braus.kplanner.menu.viewModel.main_Information_about_program
-import java.text.SimpleDateFormat
-import java.util.*
 
 class PlansCreating : AppCompatActivity() {
     lateinit var viewModel : PlansViewModel
+    lateinit var listFactory : ListFactory
+    lateinit var plansFactory: PlansFactory
     companion object{
         lateinit var ccontext : Context
     }
@@ -42,10 +41,10 @@ class PlansCreating : AppCompatActivity() {
         Timber.i("----------onPause Called.----------")
     }
 
-    public override fun onDestroy() {
+    /*public override fun onDestroy() {
         super.onDestroy()
         Timber.i("----------onDestroy Called.----------")
-    }
+    }*/
 
     public override fun onResume() {
         super.onResume()
@@ -130,100 +129,7 @@ class PlansCreating : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun goNext(view: View?) {
-        val eventText: TextView = findViewById(R.id.nameEvent)
-        val time: TextView = findViewById(R.id.timeEvent)
-        val sTime: TextView = findViewById(R.id.startTimeEvent)
-        val eTime: TextView = findViewById(R.id.endTimeEvent)
-        val tname: TextView
-        val ttime: TextView
-        if(time.text != "")
-        {
-            val i:Int = listViewModel.count.value!!
-            when (i) {
-                1->{
-                    tname = findViewById(R.id.mondayText)
-                    tname.text = eventText.text
-                    ttime = findViewById(R.id.mondayTime)
-                    ttime.text ="Початок: "+sTime.text.toString()+"\n"+"Кінець: "+ eTime.text.toString()
-                }
-                2->{tname = findViewById(R.id.mondayText)
-                    tname.text = eventText.text
-                    ttime = findViewById(R.id.mondayTime)
-                    ttime.text = "Час події: "+time.text.toString()
-                }
-                3->{tname = findViewById(R.id.mondayText)
-                    tname.text = eventText.text
-                    ttime = findViewById(R.id.mondayTime)
-                    ttime.text = "Час події: "+time.text.toString()
-                }
-                4->{tname = findViewById(R.id.mondayText)
-                    tname.text = eventText.text
-                    ttime = findViewById(R.id.mondayTime)
-                    ttime.text = "Час події: "+time.text.toString()
-                }
-                5->{tname = findViewById(R.id.mondayText)
-                    tname.text = eventText.text
-                    ttime = findViewById(R.id.mondayTime)
-                    ttime.text = "Час події: "+time.text.toString()
-                }
-                6->{tname = findViewById(R.id.mondayText)
-                    tname.text = eventText.text
-                    ttime = findViewById(R.id.mondayTime)
-                    ttime.text = "Час події: "+time.text.toString()
-                }
-                7->{tname = findViewById(R.id.mondayText)
-                    tname.text = eventText.text
-                    ttime = findViewById(R.id.mondayTime)
-                    ttime.text = "Час події: "+time.text.toString()
-                }
-            }
-        }
-        else
-        {
-            val i:Int = listViewModel.count.value!!
-            when (i) {
-                1->{
-                    tname = findViewById(R.id.mondayText)
-                    tname.text = eventText.text
-                    ttime = findViewById(R.id.mondayTime)
-                    ttime.text ="Початок: "+sTime.text.toString()+"\n"+"Кінець: "+ eTime.text.toString()
-                }
-                2->{tname = findViewById(R.id.tuesdayText)
-                    tname.text = eventText.text
-                    ttime = findViewById(R.id.tuesdayTime)
-                    ttime.text ="Початок: "+sTime.text.toString()+"\n"+"Кінець: "+ eTime.text.toString()
-                }
-                3->{tname = findViewById(R.id.wednesdayText)
-                    tname.text = eventText.text
-                    ttime = findViewById(R.id.wednesdayTime)
-                    ttime.text ="Початок: "+sTime.text.toString()+"\n"+"Кінець: "+ eTime.text.toString()
-                }
-                4->{tname = findViewById(R.id.thursdayText)
-                    tname.text = eventText.text
-                    ttime = findViewById(R.id.thursdayTime)
-                    ttime.text ="Початок: "+sTime.text.toString()+"\n"+"Кінець: "+ eTime.text.toString()
-                }
-                5->{tname = findViewById(R.id.fridayText)
-                    tname.text = eventText.text
-                    ttime = findViewById(R.id.fridayTime)
-                    ttime.text ="Початок: "+sTime.text.toString()+"\n"+"Кінець: "+ eTime.text.toString()
-                }
-                6->{tname = findViewById(R.id.saturdayText)
-                    tname.text = eventText.text
-                    ttime = findViewById(R.id.saturdayTime)
-                    ttime.text ="Початок: "+sTime.text.toString()+"\n"+"Кінець: "+ eTime.text.toString()
-                }
-                7->{tname = findViewById(R.id.sundayText)
-                    tname.text = eventText.text
-                    ttime = findViewById(R.id.sundayTime)
-                    ttime.text ="Початок: "+sTime.text.toString()+"\n"+"Кінець: "+ eTime.text.toString()
-                }
-            }
-        }
-        val intent = Intent(this, ListOfPlans::class.java)
-        Timber.i("---------------------------Добавление пункта в распорядок------------------------")
-        startActivity(intent)
-        finish()
+
     }
 
     }

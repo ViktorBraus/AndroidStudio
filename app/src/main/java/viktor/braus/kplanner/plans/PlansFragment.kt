@@ -35,7 +35,7 @@ class PlansFragment : Fragment(){
         val button3: Button = binding.timeEndButton
         button1.setOnClickListener{
             Timber.i("aazz")
-            viewModel.setCount(2)
+            viewModel.setCount(1)
         }
         button2.setOnClickListener{
             Timber.i("aazz")

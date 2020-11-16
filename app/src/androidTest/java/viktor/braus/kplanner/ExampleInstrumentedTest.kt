@@ -34,30 +34,49 @@ import java.io.IOException
  * adding the UI.
  */
 
+/*private lateinit var plansDAO: PlansDAO
+//private lateinit var mondayDAO: MondayPlanDAO
+private lateinit var db: PlansDatabase
+
+@Before
+fun createDb() {
+    val context = InstrumentationRegistry.getInstrumentation().targetContext
+    db = Room.inMemoryDatabaseBuilder(context, PlansDatabase::class.java).allowMainThreadQueries().build()
+    plansDAO = db.plansDAO
+}
+
+@After
+@Throws(IOException::class)
+fun closeDb() {
+    db.close()
+}
+
+@Test
+@Throws(Exception::class)
+fun insertAndGetNight()
+{
+    val mainPlans = Plans()
+    val mondayPlans = MondayPlan()
+    plansDAO.insert(mainPlans)
+    //mondayDAO.insert(mondayPlans)
+    val plans = plansDAO.getAll()
+    //val mplans = mondayDAO.getAll()
+    assertEquals(plans?.StartTime, -1)
+    //assertEquals(mplans?.StartTime, -1)
+}*/
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
-
     private lateinit var plansDAO: PlansDAO
     //private lateinit var mondayDAO: MondayPlanDAO
     private lateinit var db: PlansDatabase
-
-    @Before
-    fun createDb() {
+    @Test
+    fun useAppContext() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         db = Room.inMemoryDatabaseBuilder(context, PlansDatabase::class.java).allowMainThreadQueries().build()
         plansDAO = db.plansDAO
-    }
-
-    @After
-    @Throws(IOException::class)
-    fun closeDb() {
-        db.close()
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun insertAndGetNight()
-    {
+        // Context of the app under test.
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        assertEquals("viktor.braus.kplanner", appContext.packageName)
         val mainPlans = Plans()
         val mondayPlans = MondayPlan()
         plansDAO.insert(mainPlans)
