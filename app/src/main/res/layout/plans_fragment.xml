@@ -55,7 +55,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/eventPlans" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/nameEvent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
                 android:ems="10"
                 android:hint="@string/Plain"
                 android:inputType="textPersonName"
-                android:text="@{plansviewmodel.update()}"
+                android:text="@{plansviewmodel.nameEvent}"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#FFFFFF"
                 app:layout_constraintStart_toStartOf="parent"
@@ -83,13 +83,24 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nameEvent" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/timeEvent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{plansviewmodel.timeText}"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#888888"
+                android:textSize="24sp"
+                android:visibility="@{plansviewmodel.mainTime}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timeTitle" />
+
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/timeButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="60dp"
                 android:background="#673AB7"
-                android:onClick="setTime"
                 android:text="Обрати час"
                 android:textColor="#8BC34A"
                 android:visibility="@{plansviewmodel.mainTime}"
@@ -98,7 +109,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/timeTitle" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/timeStartButton"
                 android:layout_width="36dp"
                 android:layout_height="32dp"
@@ -113,7 +124,7 @@
                 app:layout_constraintStart_toEndOf="@+id/startTitle"
                 app:layout_constraintTop_toBottomOf="@+id/checkBox" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/timeEndButton"
                 android:layout_width="36dp"
                 android:layout_height="32dp"
@@ -122,23 +133,10 @@
                 android:background="#FDFDFD"
                 android:backgroundTint="#46C148"
                 android:foreground="@drawable/ic_time_button"
-                android:onClick="setTime"
                 android:textColor="#8BC34A"
                 android:visibility="@{plansviewmodel.additionaltime}"
                 app:layout_constraintStart_toEndOf="@+id/endTitle"
                 app:layout_constraintTop_toBottomOf="@+id/timeStartButton" />
-
-            <TextView
-                android:id="@+id/timeEvent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{plansviewmodel.textTime}"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#888888"
-                android:textSize="24sp"
-                android:visibility="@{plansviewmodel.mainTime}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/timeTitle" />
 
             <CheckBox
                 android:id="@+id/checkBox"
@@ -168,12 +166,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/checkBox" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/startTimeEvent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="72dp"
-                android:text="@{plansviewmodel.textStartTime}"
+                android:layout_marginTop="76dp"
+                android:text="@{plansviewmodel.timeStartText}"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#FFFFFF"
                 android:textSize="24dp"
@@ -183,18 +181,18 @@
                 app:layout_constraintStart_toEndOf="@+id/timeStartButton"
                 app:layout_constraintTop_toBottomOf="@+id/timeButton" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/endTimeEvent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@{plansviewmodel.textStopTime}"
+                android:layout_marginTop="4dp"
+                android:text="@{plansviewmodel.timeEndText}"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#FFFFFF"
                 android:textSize="24dp"
                 android:visibility="@{plansviewmodel.additionaltime}"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.501"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/timeEndButton"
                 app:layout_constraintTop_toBottomOf="@+id/startTimeEvent" />
 
@@ -226,7 +224,6 @@
                 app:layout_constraintEnd_toStartOf="@+id/accept"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent" />
-            <!--"@{plansviewmodel.planning}"-->
             <Button
                 android:id="@+id/accept"
                 android:layout_width="110dp"
@@ -235,22 +232,11 @@
                 android:layout_marginBottom="16dp"
                 android:background="#673AB7"
                 android:gravity="center"
-                android:onClick="returning"
                 android:text="Прийняти"
                 android:textColor="#8BC34A"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="251dp"
-                android:layout_height="52dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="40dp"
-                android:textColor="#FFFFFF"
-                android:text=""
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/endTimeEvent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

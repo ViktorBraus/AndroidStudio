@@ -53,12 +53,12 @@ class ExampleInstrumentedTest {
         db.close()
     }
 
-    /*@Test
+    @Test
     @Throws(Exception::class)
-    fun insertAndGetNight() {
+     suspend fun insertAndGetNight() {
         val mainPlans = Plans()
         plansDAO.insert(mainPlans)
         val plans = plansDAO.getAll()
         assertEquals(plans?.StartTime, "")
-    }*/
+    }
 }

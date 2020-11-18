@@ -75,4 +75,7 @@ KOROLENKO</string>
     <string name="header"></string>
     <string name="User"></string>
     <string name="show_user_name">Show User Name</string>
+    <string name="title"><![CDATA[<h3>HERE IS YOUR SLEEP DATA</h3>]]></string>
+    <string name="start_time"><![CDATA[<b>Назва Події:</b>]]></string>
+    <string name="end_time"><![CDATA[<b>Час Події:</b>]]></string>
 </resources>

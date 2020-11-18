@@ -10,12 +10,15 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import timber.log.Timber
 import viktor.braus.kplanner.R
+import viktor.braus.kplanner.entity.PlansDAO
 import viktor.braus.kplanner.entity.PlansDatabase
 import viktor.braus.kplanner.menu.factoryMethod.About_Fragment
 import viktor.braus.kplanner.menu.viewModel.Information_fragment
 import viktor.braus.kplanner.plans.listOfPlans.ListFragment
+import viktor.braus.kplanner.plans.plansCreating.PlansFactory
 import viktor.braus.kplanner.plans.plansCreating.PlansFragment
 import viktor.braus.kplanner.plans.plansCreating.PlansViewModel
 import viktor.braus.kplanner.timer.TTimer
@@ -25,6 +28,7 @@ import java.util.*
 
 //"Перейшов на мову Kotlin, 5 Лабораторна робота"
 class MainActivity : AppCompatActivity() {
+    var d: String? = null
     var fragment = MainFragment()
     var TTimer: TTimer = TTimer()
     var time: String? = null
@@ -50,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState != null) {
             revenue = savedInstanceState.getInt(K_REV, 1)
         }
+
     }
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
@@ -180,7 +185,8 @@ class MainActivity : AppCompatActivity() {
     {
         finishAffinity()
     }
-    fun BackWard(view: View?) {
+    fun BackWard(view: View?)
+    {
         Timber.i("---------------------------Возвращение на главный экран------------------------")
         var fragment : MainFragment  = MainFragment()
         supportFragmentManager
@@ -189,8 +195,7 @@ class MainActivity : AppCompatActivity() {
             .addToBackStack(null)
             .commit()
     }
-    fun returning(view: View?) {
-        val dataSource = PlansDatabase.getInstance(application).plansDAO
+    fun returning(v:View) {
         Timber.i("---------------------------Возвращение на страницу распорядка------------------------")
         var fragment = ListFragment()
         supportFragmentManager
@@ -198,7 +203,6 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.main_container, fragment)
             .addToBackStack(null)
             .commit()
-        PlansViewModel(application, dataSource).planning()
     }
 
     @SuppressLint("SetTextI18n")
@@ -231,6 +235,9 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
     fun setTime(v: View)
     {
+        var t: TextView = findViewById(R.id.timeEvent)
+        var t1: TextView = findViewById(R.id.startTimeEvent)
+        var t2: TextView = findViewById(R.id.endTimeEvent)
         val id = v.id
         if(id == R.id.timeButton) {
             val cal = Calendar.getInstance()
@@ -239,10 +246,8 @@ class MainActivity : AppCompatActivity() {
                 cal.set(Calendar.MINUTE, minute)
                 var t: TextView = findViewById(R.id.timeEvent)
                 t.text = SimpleDateFormat().format(cal.time)
-                //_time.value = cal.get(Calendar.HOUR_OF_DAY).toString()+":"+cal.get(Calendar.MINUTE).toString()
-                //_textTime.value = SimpleDateFormat().format(cal.time)
-                //_textTime.value = time.value
-                //Timber.i("asasas${textTime.value}")
+                d=t.text.toString()
+                Timber.i("nnnnnnnnnnn${d}")
             }
             TimePickerDialog(
                 this@MainActivity, timeSetListener,
@@ -256,12 +261,8 @@ class MainActivity : AppCompatActivity() {
             var timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
                 cal.set(Calendar.HOUR_OF_DAY, hour)
                 cal.set(Calendar.MINUTE, minute)
-                var t: TextView = findViewById(R.id.startTimeEvent)
-                t.text = SimpleDateFormat().format(cal.time)
-                //_time.value = cal.get(Calendar.HOUR_OF_DAY).toString()+":"+cal.get(Calendar.MINUTE).toString()
-                //_textTime.value = SimpleDateFormat().format(cal.time)
-                //_textTime.value = time.value
-                //Timber.i("asasas${textTime.value}")
+                t1.text = SimpleDateFormat().format(cal.time)
+                d=t1.text.toString()
             }
             TimePickerDialog(
                 this@MainActivity, timeSetListener,
@@ -275,12 +276,8 @@ class MainActivity : AppCompatActivity() {
             var timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
                 cal.set(Calendar.HOUR_OF_DAY, hour)
                 cal.set(Calendar.MINUTE, minute)
-                var t: TextView = findViewById(R.id.endTimeEvent)
-                t.text = SimpleDateFormat().format(cal.time)
-                //_time.value = cal.get(Calendar.HOUR_OF_DAY).toString()+":"+cal.get(Calendar.MINUTE).toString()
-                //_textTime.value = SimpleDateFormat().format(cal.time)
-                //_textTime.value = time.value
-                //Timber.i("asasas${textTime.value}")
+                t2.text = SimpleDateFormat().format(cal.time)
+                d=t2.text.toString()
             }
             TimePickerDialog(
                 this@MainActivity, timeSetListener,
@@ -289,5 +286,4 @@ class MainActivity : AppCompatActivity() {
             ).show()
         }
     }
-
 }

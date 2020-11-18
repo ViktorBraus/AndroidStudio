@@ -5,58 +5,63 @@ import android.app.Application
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.view.View
+import android.widget.TextView
 import androidx.lifecycle.*
+import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.*
+import org.threeten.bp.LocalTime
+import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber
+import viktor.braus.kplanner.R
+import viktor.braus.kplanner.entity.Plans
 import viktor.braus.kplanner.entity.PlansDAO
 import viktor.braus.kplanner.mainPage.MainActivity
+import viktor.braus.kplanner.mainPage.formatNights
 import viktor.braus.kplanner.plans.listOfPlans.ListFragment
 import viktor.braus.kplanner.plans.listOfPlans.ListViewModel
+import java.sql.Time
 import java.text.SimpleDateFormat
 import java.util.*
 
 class PlansViewModel(application: Application,
-                     val plansDAO: PlansDAO) : AndroidViewModel(application) {
-    //private var viewModel: ListViewModel = ListViewModel(context)
-    val cal = Calendar.getInstance()
-    var con: Application=application
-    private var _time = MutableLiveData<String>()
-    val time: LiveData<String>
-        get() = _time
+                     private val plansDAO: PlansDAO) : AndroidViewModel(application) {
+    //////////////////////                                      Для связи с БД
+    private var plan = MutableLiveData<Plans?>()
+    private val plans = plansDAO.getAllPlans()
+    val nightsString = Transformations.map(plans) { nights ->
+        formatNights(nights, application.resources)
+    }
     var counter: Boolean = true
-    var _j = MutableLiveData<Int>()
-    val j: LiveData<Int>
-        get() = _j
-    private val _count = MutableLiveData<Int>()
-    val count: LiveData<Int>
-        get() = _count
     /////////////////////////////////////////////////////       для записи значений имени и времени события
 
-    private var _timeEvent = MutableLiveData<String>()
-    val timeEvent: LiveData<String>
-        get() = _timeEvent
-    private var _timeStart = MutableLiveData<String>()
-    val timeStart: LiveData<String>
-        get() = _timeStart
-    private var _timeEnd = MutableLiveData<String>()
-    val timeEnd: LiveData<String>
-        get() = _timeEnd
-
-    ////////////////////////////////////////////////////////        для обнуления полей при нажатии на чекбокс
-    private var _eventName = MutableLiveData<String>()
-    val eventName: LiveData<String>
-        get() = _eventName
-    private var _textStartTime = MutableLiveData<String>()
-    val textStartTime: LiveData<String>
-        get() = _textStartTime
-    private var _textStopTime = MutableLiveData<String>()
-    val textStopTime: LiveData<String>
-        get() = _textStopTime
+    private val _selectedTime = MutableLiveData<LocalTime>()
+    val selectedTime: LiveData<LocalTime> = _selectedTime
+    fun setSelectedTime(time: LocalTime) {
+        _selectedTime.value = time
+    }
+    private val _selectedStartTime = MutableLiveData<LocalTime>()
+    val selectedStartTime: LiveData<LocalTime> = _selectedStartTime
+    fun setSelectedStartTime(time: LocalTime) {
+        _selectedStartTime.value = time
+    }
+    private val _selectedEndTime = MutableLiveData<LocalTime>()
+    val selectedEndTime: LiveData<LocalTime> = _selectedEndTime
+    fun setSelectedEndTime(time: LocalTime) {
+        _selectedEndTime.value = time
+    }
+    var timeText: LiveData<String> = Transformations.map(_selectedTime) {
+        it.format(DateTimeFormatter.ofPattern("hh:mm a"))
+    }
+    var timeStartText: LiveData<String> = Transformations.map(_selectedStartTime) {
+        it.format(DateTimeFormatter.ofPattern("hh:mm a"))
+    }
+    var timeEndText: LiveData<String> = Transformations.map(_selectedEndTime) {
+        it.format(DateTimeFormatter.ofPattern("hh:mm a"))
+    }
     private var _nameEvent = MutableLiveData<String>()
     val nameEvent: LiveData<String>
         get() = _nameEvent
-    var _textTime = MutableLiveData<String>()
-    val textTime: LiveData<String>
-        get() = _textTime
+    fun update1(result: String){ _nameEvent.value = result }
     ////////////////////////////////////////////////////////    для изменения видимости
     private val _additionaltime = MutableLiveData<Int>()
     val additionaltime: LiveData<Int>
@@ -67,20 +72,12 @@ class PlansViewModel(application: Application,
     private val _editTime = MutableLiveData<Boolean>()         // меняет состояние кнопки
     val editTime: LiveData<Boolean>
         get() = _editTime
-
     init {
-        _nameEvent.value="bbbb"
-        _count.value = 0
-        _timeEvent.value = ""
-        _timeStart.value = ""
-        _timeEnd.value = ""
-        _textStartTime.value = ""
-        _textStopTime.value = ""
         _mainTime.value = View.VISIBLE
         _additionaltime.value = View.INVISIBLE
+        _nameEvent.value=""
+        initializePlans()
     }
-
-
     fun monitor(): Boolean? {
         if (counter) {
             Timber.i("-----------------------------------------")
@@ -88,248 +85,72 @@ class PlansViewModel(application: Application,
             _additionaltime.value = View.VISIBLE
             _mainTime.value = View.INVISIBLE
             counter = false
-            _textTime.value = ""
+            setSelectedTime(LocalTime.of(0,0))
+            setSelectedStartTime((LocalTime.of(0,0)))
+            setSelectedEndTime(LocalTime.of(0,0))
             return _editTime.value!!
         } else {
             Timber.i("||||||||||||||||||||||||||||||||||||||||||||||")
             _additionaltime.value = View.INVISIBLE
             _mainTime.value = View.VISIBLE
             counter = true
-            _textStartTime.value = ""
-            _textStopTime.value = ""
-            _textTime.value = ""
-            changeAppearance()
+            setSelectedTime(LocalTime.of(0,0))
+            setSelectedStartTime((LocalTime.of(0,0)))
+            setSelectedEndTime(LocalTime.of(0,0))
+            _editTime.value = false
             return _editTime.value
         }
     }
 
-    fun update() :String
-    {
-        return _nameEvent.value.toString()
-    }
-    fun setCount(s: Int): Int {
-        val i: Int = s
-        _count.value = i
-        return _count.value!!
-    }
-
-    fun changeAppearance() {
-        _editTime.value = false
-    }
-    fun planning() {
-        if (textTime.value != "") {
-            when (ListViewModel.S) {
-                1 -> {
-                   // _nameEvent.value = _eventName.value
-                    _timeEvent.value = "Час події: " + _textTime.value
-                }
-                2 -> {
-                    _nameEvent.value = _eventName.value
-                    _timeEvent.value = "Час події: " + _textTime.value
-                }
-                3 -> {
-                    _nameEvent.value = _eventName.value
-                    _timeEvent.value = "Час події: " + _textTime.value
-                }
-                4 -> {
-                    _nameEvent.value = _eventName.value
-                    _timeEvent.value = "Час події: " + _textTime.value
-                }
-                5 -> {
-                    _nameEvent.value = _eventName.value
-                    _timeEvent.value = "Час події: " + _textTime.value
-                }
-                6 -> {
-                    _nameEvent.value = _eventName.value
-                    _timeEvent.value = "Час події: " + _textTime.value
-                }
-                7 -> {
-                    _nameEvent.value = _eventName.value
-                    _timeEvent.value = "Час події: " + _textTime.value
-                }
-                else -> {
-                    Timber.i("Wrong")
-                }
-            }
-        }
-            else
-        {
-            when (ListViewModel.S)
-                {
-                    1 ->
-                    {
-                        Timber.i("textTime eeeis: ${textTime.value}")
-                        _nameEvent.value = _eventName.value
-                        _timeEvent.value = "Початок: "+textStartTime.value+"\n"+"Кінець: "+textStopTime.value
-                    }
-                    2 ->
-                    {
-                        _nameEvent.value = _eventName.value
-                        _timeEvent.value = "Початок: "+textStartTime.value+"\n"+"Кінець: "+textStopTime.value
-                    }
-                    3 ->
-                    {
-                        _nameEvent.value = _eventName.value
-                        _timeEvent.value = "Початок: "+textStartTime.value+"\n"+"Кінець: "+textStopTime.value
-                    }
-                    4 ->
-                    {
-                        _nameEvent.value = _eventName.value
-                        _timeEvent.value = "Початок: "+textStartTime.value+"\n"+"Кінець: "+textStopTime.value
-                    }
-                    5 ->
-                    {
-                        _nameEvent.value = _eventName.value
-                        _timeEvent.value = "Початок: "+textStartTime.value+"\n"+"Кінець: "+textStopTime.value
-                    }
-                    6 ->
-                    {
-                        _nameEvent.value = _eventName.value
-                        _timeEvent.value = "Початок: "+textStartTime.value+"\n"+"Кінець: "+textStopTime.value
-                    }
-                    7 ->
-                    {
-                        _nameEvent.value = _eventName.value
-                        _timeEvent.value = "Початок: "+textStartTime.value+"\n"+"Кінець: "+textStopTime.value
-                    }
-                    else ->
-                    {
-                        Timber.i("Wrong")
-                    }
-                }
-        }
-        //goNext(view)
-        Timber.i("Name of event is: ${nameEvent.value}")
-        Timber.i("Time of event is: ${textTime.value}")
-        update()
-
-    }
-    //@SuppressLint("SetTextI18n")
-//    fun goNext(view: View?) {
-//
-//        _nameEvent.value = _nameEvent.value
-//        if(textTime.value == "")
-//        {
-//            _nameEvent.value =_nameEvent.value
-//            _textTime.value = _eventName.value
-//
-//        }
-//        else
-//        {
-//            _nameEvent.value = _eventName.value
-//            _timeEvent.value ="Початок: "+_textStartTime.value+"\n"+"Кінець: "+ _textStopTime.value
-//        }
-//
-//    }
-    @SuppressLint("SimpleDateFormat")
-    fun time2(view: View?) {
-        var timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-            cal.set(Calendar.HOUR_OF_DAY, hour)
-            cal.set(Calendar.MINUTE, minute)
-            _textStartTime.value = SimpleDateFormat().format(cal.time)
-        }
-        TimePickerDialog(con, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
-
-    }
-    @SuppressLint("SimpleDateFormat")
-    fun time3(view: View?) {
-        var timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-            cal.set(Calendar.HOUR_OF_DAY, hour)
-            cal.set(Calendar.MINUTE, minute)
-            _textStopTime.value = SimpleDateFormat().format(cal.time)
-        }
-        TimePickerDialog(con, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
-    }
-
-    /////////////////Coroutine//////////////////////////////
-    /*private val viewModelJob = Job()
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
-    private val uiScope = CoroutineScope(Dispatchers.Main+viewModelJob)
-    private var _nameEvent = MutableLiveData<String>()
-    val nameEvent: LiveData<String>
-        get() = _nameEvent
-    private var _textTime = MutableLiveData<String>()
-    val textTime: LiveData<String>
-        get() = _textTime
-    private var plan = MutableLiveData<Plans?>()
-    private val plans = plansDAO.getAllPlans()
-    init
-    {
-        _nameEvent.value="bbbb"
-        _textTime.value=""
-    initializePlans()
-    }
     private fun initializePlans()
     {
-        uiScope.launch {
+        viewModelScope.launch {
             plan.value = getPlanFromDb()
         }
     }
     private suspend fun getPlanFromDb():Plans?
     {
         var planning = plansDAO.getAll()
-        if (planning?.EventName == "") {
-            planning.EventName = nameEvent.value.toString()
-            planning.Time = textTime.value.toString()
+        if (planning?.EventName != "") {
+            planning=null
         }
         return planning
     }
-    fun onStartTracking()
-    {
-        uiScope.launch {
-            val newPlan = Plans()
-            insert(newPlan)
-            plan.value = getPlanFromDb()
-        }
-        val login = Intent(con, ListOfPlans::class.java)
-        update()
-        Timber.i("Name of event is: ${nameEvent.value}")
-        Timber.i("Time of event is: ${textTime.value}")
-        con.startActivity(login)
-    }
-
     private suspend fun insert(plan:Plans)
     {
-        withContext(Dispatchers.IO)
-        {
             plansDAO.insert(plan)
-        }
     }
     private suspend fun update(plan:Plans)
     {
-        withContext(Dispatchers.IO)
-        {
             plansDAO.update(plan)
-        }
+
     }
-    suspend fun clear()
+    fun onStartTracking()
     {
-        withContext(Dispatchers.IO)
-        {
-            plansDAO.clear()
-        }
-    }
-    fun onClear()
-    {
-        uiScope.launch {
-            clear()
-            plan.value = null
+        val newPlan = Plans()
+        viewModelScope.launch{
+            newPlan.EventName = nameEvent.value.toString()
+            if(selectedTime.value.toString() == "00:00")
+            {
+                newPlan.Time="Інтервал"
+                newPlan.StartTime = selectedStartTime.value.toString()
+                newPlan.EndTime = selectedEndTime.value.toString()
+            }
+            else
+            {
+                newPlan.Time=selectedTime.value.toString()
+            }
+            insert(newPlan)
+            plan.value = getPlanFromDb()
         }
     }
     fun onStopTracking()
     {
-        uiScope.launch {
+        viewModelScope.launch {
             var oldPlan = plan.value ?: return@launch
-            oldPlan.EventName = nameEvent.value.toString()
-            oldPlan.EventName = textTime.value.toString()
+            oldPlan.EventName = "TextNameccc"
+            oldPlan.EventName = "TestTimecc"
             update(oldPlan)
         }
     }
-    fun formatPlans()
-    {
-
-    }*/
 }
