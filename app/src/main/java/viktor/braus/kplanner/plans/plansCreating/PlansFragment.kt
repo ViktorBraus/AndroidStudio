@@ -1,11 +1,11 @@
 package viktor.braus.kplanner.plans.plansCreating
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -18,7 +18,6 @@ import viktor.braus.kplanner.R
 import viktor.braus.kplanner.databinding.PlansFragmentBinding
 import viktor.braus.kplanner.entity.PlansDatabase
 import viktor.braus.kplanner.mainPage.MainActivity
-import viktor.braus.kplanner.plans.listOfPlans.ListFragment
 
 
 class PlansFragment : Fragment() {
@@ -32,6 +31,7 @@ class PlansFragment : Fragment() {
             container,
             false
         )
+        Timber.i("DDay: ${MainActivity.dayText}")
         var text: TextView = binding.nameEvent
         val application = requireNotNull(this.activity).application
         val dataSource = PlansDatabase.getInstance(application).plansDAO
@@ -50,24 +50,45 @@ class PlansFragment : Fragment() {
             fragmentManager?.let { it1 -> startTimePicker.show(it1, "Main Time Picker") }
         }
         binding.timeStartButton.setOnClickListener {
-            val field1 = binding.nameEvent.text.toString()
-            viewModel.update1(field1)
-            val startTime = viewModel.selectedStartTime.value ?: LocalTime.of(0, 0)
-            val startTimePicker = TimePickerDialog.newInstance({ _, hour, minute, _ ->
-                val time = LocalTime.of(hour, minute)
-                viewModel.setSelectedStartTime(time)
-            }, startTime.hour, startTime.minute, true)
-            fragmentManager?.let { it1 -> startTimePicker.show(it1, "Start Time Picker") }
+                val field1 = binding.nameEvent.text.toString()
+                viewModel.update1(field1)
+                val startTime = viewModel.selectedStartTime.value ?: LocalTime.of(0, 0)
+                val startTimePicker = TimePickerDialog.newInstance({ _, hour, minute, _ ->
+                    val time = LocalTime.of(hour, minute)
+                    viewModel.setSelectedStartTime(time)
+                }, startTime.hour, startTime.minute, true)
+                fragmentManager?.let { it1 -> startTimePicker.show(it1, "Start Time Picker") }
         }
         binding.timeEndButton.setOnClickListener {
-            val field1 = binding.nameEvent.text.toString()
-            viewModel.update1(field1)
-            val startTime = viewModel.selectedEndTime.value ?: LocalTime.of(0, 0)
-            val startTimePicker = TimePickerDialog.newInstance({ _, hour, minute, _ ->
-                val time = LocalTime.of(hour, minute)
-                viewModel.setSelectedEndTime(time)
-            }, startTime.hour, startTime.minute, true)
-            fragmentManager?.let { it1 -> startTimePicker.show(it1, "End Time Picker") }
+            if(viewModel.selectedStartTime.value.toString() == "00:00" && viewModel.selectedEndTime.value.toString() == "00:00" && !viewModel.counter)
+            {
+                Toast.makeText(this.activity, "Введіть будь ласка спочатку час початку події", Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                val field1 = binding.nameEvent.text.toString()
+                viewModel.update1(field1)
+                val startTime = viewModel.selectedEndTime.value ?: LocalTime.of(0, 0)
+                val startTimePicker = TimePickerDialog.newInstance({ _, hour, minute, _ ->
+                    val time = LocalTime.of(hour, minute)
+                    viewModel.setSelectedEndTime(time)
+                    if(viewModel.selectedStartTime.value?.hour!! <= viewModel.selectedEndTime.value?.hour!!)
+                    {
+                        if (viewModel.selectedStartTime.value?.minute!! < viewModel.selectedEndTime.value?.minute!!)
+                            viewModel.setSelectedEndTime(time)
+                        else {
+                            Toast.makeText(this.activity, "Введіть будь ласка хвилини, більші за час початку події", Toast.LENGTH_SHORT).show()
+                            viewModel.setSelectedEndTime(LocalTime.of(0, 0))
+                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(this.activity, "Введіть будь ласка час, більший за час початку події", Toast.LENGTH_SHORT).show()
+                        viewModel.setSelectedEndTime(LocalTime.of(0,0))
+                    }
+                }, startTime.hour, startTime.minute, true)
+                fragmentManager?.let { it1 -> startTimePicker.show(it1, "End Time Picker") }
+            }
         }
         binding.accept.setOnClickListener {
             viewModel.onStartTracking()

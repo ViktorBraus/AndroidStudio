@@ -1,48 +1,37 @@
 package viktor.braus.kplanner.plans.plansCreating
 
-import android.annotation.SuppressLint
 import android.app.Application
-import android.app.TimePickerDialog
-import android.content.Intent
 import android.view.View
-import android.widget.TextView
 import androidx.lifecycle.*
-import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.*
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber
-import viktor.braus.kplanner.R
 import viktor.braus.kplanner.entity.Plans
 import viktor.braus.kplanner.entity.PlansDAO
 import viktor.braus.kplanner.mainPage.MainActivity
-import viktor.braus.kplanner.mainPage.formatNights
-import viktor.braus.kplanner.plans.listOfPlans.ListFragment
-import viktor.braus.kplanner.plans.listOfPlans.ListViewModel
-import java.sql.Time
-import java.text.SimpleDateFormat
-import java.util.*
 
 class PlansViewModel(application: Application,
                      private val plansDAO: PlansDAO) : AndroidViewModel(application) {
     //////////////////////                                      Для связи с БД
     private var plan = MutableLiveData<Plans?>()
     private val plans = plansDAO.getAllPlans()
-    val nightsString = Transformations.map(plans) { nights ->
-        formatNights(nights, application.resources)
-    }
+
     var counter: Boolean = true
     /////////////////////////////////////////////////////       для записи значений имени и времени события
+    private var _daytext = MutableLiveData<String>()
+    val daytext: LiveData<String>
+        get() = _daytext
     private var _nameEvent = MutableLiveData<String>()
     val nameEvent: LiveData<String>
         get() = _nameEvent
     fun update1(result: String){ _nameEvent.value = result }
     private val _selectedTime = MutableLiveData<LocalTime>()
     val selectedTime: LiveData<LocalTime> = _selectedTime
-    fun setSelectedTime(time: LocalTime) {
+    fun setSelectedTime(time: LocalTime?) {
         _selectedTime.value = time
     }
-    private val _selectedStartTime = MutableLiveData<LocalTime>()
+    val _selectedStartTime = MutableLiveData<LocalTime>()
     val selectedStartTime: LiveData<LocalTime> = _selectedStartTime
     fun setSelectedStartTime(time: LocalTime) {
         _selectedStartTime.value = time
@@ -53,7 +42,7 @@ class PlansViewModel(application: Application,
         _selectedEndTime.value = time
     }
     var timeText: LiveData<String> = Transformations.map(_selectedTime) {
-        it.format(DateTimeFormatter.ofPattern("hh:mm a"))
+            it.format(DateTimeFormatter.ofPattern("hh:mm a"))
     }
     var timeStartText: LiveData<String> = Transformations.map(_selectedStartTime) {
         it.format(DateTimeFormatter.ofPattern("hh:mm a"))
@@ -109,7 +98,12 @@ class PlansViewModel(application: Application,
             return _editTime.value
         }
     }
-
+    fun showUser():String
+    {
+        Timber.i("-------------------------------------")
+        _daytext.value = MainActivity.dayText
+        return  _daytext.value.toString()
+    }
     private fun initializePlans()
     {
         viewModelScope.launch {
@@ -137,8 +131,9 @@ class PlansViewModel(application: Application,
     {
         val newPlan = Plans()
         viewModelScope.launch{
+            newPlan.EventDay= MainActivity.dayText.toString()
             newPlan.EventName = nameEvent.value.toString()
-            if(selectedTime.value.toString() == "00:00")
+            if(selectedTime.value.toString() == "00:00" && !counter)
             {
                 newPlan.Time="Інтервал"
                 newPlan.StartTime = selectedStartTime.value.toString()

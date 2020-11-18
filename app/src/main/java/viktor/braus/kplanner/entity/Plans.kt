@@ -7,13 +7,15 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "Planner")
 data class Plans(
         @PrimaryKey(autoGenerate = true)
-    var EventID: Long = 0L,
+            var EventID: Long = 0L,
+        @ColumnInfo(name = "Day of Event")
+        var EventDay: String = "",
         @ColumnInfo(name = "Name of Event")
-        var EventName: String = "",
+            var EventName: String = "",
         @ColumnInfo(name = "Time of Event")
-    var Time: String = "",
+            var Time: String = "",
         @ColumnInfo(name = "Time Start")
-    var StartTime: String = "",
+            var StartTime: String = "",
         @ColumnInfo(name = "Time End")
-    var EndTime: String = ""
+            var EndTime: String = ""
 )

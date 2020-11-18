@@ -6,9 +6,8 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import viktor.braus.kplanner.entity.Plans
 import viktor.braus.kplanner.entity.PlansDAO
+import viktor.braus.kplanner.mainPage.*
 //import viktor.braus.kplanner.entity.Plans
-import viktor.braus.kplanner.mainPage.MainActivity
-import viktor.braus.kplanner.mainPage.formatNights
 
 class ListViewModel(application: Application,
         private val plansDAO: PlansDAO): AndroidViewModel(application)
@@ -24,15 +23,12 @@ class ListViewModel(application: Application,
     init {
         _username.value = ""
     }
+
     fun showUser():String
     {
         Timber.i("-------------------------------------")
         _username.value = "Вітаю, "+MainActivity.S
         return _username.value.toString()
-    }
-    private val getPlans = plansDAO.getAllPlans()
-    val nightsString = Transformations.map(getPlans) { nights ->
-        formatNights(nights, application.resources)
     }
     private var _showSnackbarEvent = MutableLiveData<Boolean>()
     val showSnackbar : LiveData<Boolean>
@@ -47,12 +43,31 @@ class ListViewModel(application: Application,
         get() = _textTime
     private var plan = MutableLiveData<Plans?>()
     private val plans = plansDAO.getAllPlans()
-    val plansString = Transformations.map(plans) { nights ->
-        formatNights(nights, application.resources)
+    val MplansString = Transformations.map(plans) { nights ->
+        MondayFormat(nights, application.resources)
+    }
+    val TplansString = Transformations.map(plans) { nights ->
+        TuesdayFormat(nights, application.resources)
+    }
+    val WplansString = Transformations.map(plans) { nights ->
+        WednesdayFormat(nights, application.resources)
+    }
+    val ThplansString = Transformations.map(plans) { nights ->
+        ThursdayFormat(nights, application.resources)
+    }
+    val FplansString = Transformations.map(plans) { nights ->
+        FridayFormat(nights, application.resources)
+    }
+    val StplansString = Transformations.map(plans) { nights ->
+        SaturdayFormat(nights, application.resources)
+    }
+    val SplansString = Transformations.map(plans) { nights ->
+        SundayFormat(nights, application.resources)
     }
     init
     {
         initializePlans()
+
     }
     private fun initializePlans()
     {

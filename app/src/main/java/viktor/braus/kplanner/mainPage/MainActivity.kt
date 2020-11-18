@@ -7,8 +7,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import timber.log.Timber
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         var K_REV: String? = null
         var S: String? = null
+        var dayText : String? = null
     }
         var revenue = 0
     init
@@ -97,15 +100,43 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         when (id) {
+            R.id.main_activity -> {
+                if(S == null)
+                {
+                    Timber.i("---------------------------Активирован пункт меню открытия распорядка дня------------------------")
+                    var fragment = MainFragment()
+                    supportFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.main_container, fragment)
+                            .addToBackStack(null)
+                            .commit()
+                    return true
+                }
+                else
+                {
+                    Toast.makeText(this,"Ви вже авторизовані))",Toast.LENGTH_SHORT).show()
+                    return false
+                }
+
+            }
             R.id.open_activity -> {
-                Timber.i("---------------------------Активирован пункт меню открытия распорядка дня------------------------")
-                var fragment = ListFragment()
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.main_container, fragment)
-                    .addToBackStack(null)
-                    .commit()
-                return true
+                if(S!=null)
+                {
+                    Timber.i("---------------------------Активирован пункт меню открытия распорядка дня------------------------")
+                    var fragment = ListFragment()
+                    supportFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.main_container, fragment)
+                            .addToBackStack(null)
+                            .commit()
+                    return true
+                }
+                else
+                {
+                    Toast.makeText(this,"Будь ласка, введіть своє ім'я)))",Toast.LENGTH_SHORT).show()
+                    return false
+                }
+
             }
             R.id.about -> {
                 var fragment = About_Fragment()
@@ -160,7 +191,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.exit -> {
                 Timber.i("---------------------------выход из программы------------------------")
-                onDestroy()
+                finish()
                 return true
             }
         }
@@ -173,13 +204,20 @@ class MainActivity : AppCompatActivity() {
         Timber.plant()
         Timber.i("------------------sendmessage method used--------------------")
         S = message
-        Timber.i("Имя пользователя, которое было отправлено: $message")
-        var fragment = ListFragment()
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.main_container, fragment)
-            .addToBackStack(null)
-            .commit()
+        if(S != "")
+        {
+            Timber.i("Имя пользователя, которое было отправлено: $message")
+            var fragment = ListFragment()
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.main_container, fragment)
+                    .addToBackStack(null)
+                    .commit()
+        }
+        else
+        {
+            Toast.makeText(this,"Будь ласка, введіть своє ім'я)))",Toast.LENGTH_SHORT).show()
+        }
     }
     fun Exit(view: View)
     {
@@ -209,29 +247,46 @@ class MainActivity : AppCompatActivity() {
     fun goNext(view: View?) {
 
     }
-    fun Planning(view: View?) {
-        Timber.i("---------------------------Активировано действие перехода на создание плана------------------------")
+    fun Planning(view: View) {
+        Timber.plant()
         var fragment = PlansFragment()
+        Timber.i("---------------------------Активировано действие перехода на создание плана------------------------")
+        val id = view.id
+        if(id == R.id.mondayButton)
+        {
+            dayText = "Понеділок"
+        }
+        if(id == R.id.tuesdayButton)
+        {
+            dayText = "Вівторок"
+        }
+        if(id == R.id.wednesdayButton)
+        {
+            dayText = "Середа"
+        }
+        if(id == R.id.thursdayButton)
+        {
+            dayText = "Четвер"
+        }
+        if(id == R.id.fridayButton)
+        {
+            dayText = "П'ятниця"
+        }
+        if(id == R.id.saturdayButton)
+        {
+            dayText = "Субота"
+        }
+        if(id == R.id.sundayButton)
+        {
+            dayText = "Неділя"
+        }
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.main_container, fragment)
             .addToBackStack(null)
             .commit()
-
+    Timber.i("Day: $dayText")
     }
-//    @SuppressLint("SimpleDateFormat")
-//    fun time1(view: View?)
-//    {
-//        val cal = Calendar.getInstance()
-//        var con = PlansFragment().activity
-//        val dataSource = PlansDatabase.getInstance(application).plansDAO
-//        TimePickerDialog(
-//            con,
-//            PlansViewModel(application, dataSource).timeSetListener, cal.get(Calendar.HOUR_OF_DAY
-//            ), cal.get(Calendar.MINUTE), true
-//        ).show()
-//        PlansViewModel(application, dataSource).time1()
-//    }
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
     fun setTime(v: View)
     {
@@ -247,7 +302,6 @@ class MainActivity : AppCompatActivity() {
                 var t: TextView = findViewById(R.id.timeEvent)
                 t.text = SimpleDateFormat().format(cal.time)
                 d=t.text.toString()
-                Timber.i("nnnnnnnnnnn${d}")
             }
             TimePickerDialog(
                 this@MainActivity, timeSetListener,
