@@ -33,7 +33,10 @@ class PlansViewModel(application: Application,
     }
     var counter: Boolean = true
     /////////////////////////////////////////////////////       для записи значений имени и времени события
-
+    private var _nameEvent = MutableLiveData<String>()
+    val nameEvent: LiveData<String>
+        get() = _nameEvent
+    fun update1(result: String){ _nameEvent.value = result }
     private val _selectedTime = MutableLiveData<LocalTime>()
     val selectedTime: LiveData<LocalTime> = _selectedTime
     fun setSelectedTime(time: LocalTime) {
@@ -58,10 +61,14 @@ class PlansViewModel(application: Application,
     var timeEndText: LiveData<String> = Transformations.map(_selectedEndTime) {
         it.format(DateTimeFormatter.ofPattern("hh:mm a"))
     }
-    private var _nameEvent = MutableLiveData<String>()
-    val nameEvent: LiveData<String>
-        get() = _nameEvent
-    fun update1(result: String){ _nameEvent.value = result }
+    /////////////////////////////////////////////               SnackBar
+    private var _showSnackbarEvent = MutableLiveData<Boolean>()
+            val showSnackbar : LiveData<Boolean>
+        get()=_showSnackbarEvent
+    fun doneShowingSnackbar()
+    {
+        _showSnackbarEvent.value = false
+    }
     ////////////////////////////////////////////////////////    для изменения видимости
     private val _additionaltime = MutableLiveData<Int>()
     val additionaltime: LiveData<Int>
@@ -72,6 +79,7 @@ class PlansViewModel(application: Application,
     private val _editTime = MutableLiveData<Boolean>()         // меняет состояние кнопки
     val editTime: LiveData<Boolean>
         get() = _editTime
+    /////////////////////////////////////////////////////////
     init {
         _mainTime.value = View.VISIBLE
         _additionaltime.value = View.INVISIBLE
@@ -142,6 +150,7 @@ class PlansViewModel(application: Application,
             }
             insert(newPlan)
             plan.value = getPlanFromDb()
+            _showSnackbarEvent.value = true
         }
     }
     fun onStopTracking()

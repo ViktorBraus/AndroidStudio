@@ -328,6 +328,7 @@
                     android:layout_columnSpan="2"
                     android:layout_gravity="center|top|end"
                     android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
                     android:background="#673AB7"
                     android:onClick="BackWard"
                     android:text="@string/NewAction1"
@@ -343,10 +344,11 @@
                     android:layout_column="0"
                     android:layout_columnSpan="2"
                     android:layout_gravity="start|top"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
                     android:background="#673AB7"
                     android:onClick="@{() -> listViewModel.onClear()}"
-                    android:text="Очистить планы"
+                    android:text="Видалити дані"
                     android:textColor="#8BC34A"
                     android:textSize="18sp" />
 

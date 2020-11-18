@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import org.threeten.bp.LocalTime
 import timber.log.Timber
@@ -20,22 +21,22 @@ import viktor.braus.kplanner.mainPage.MainActivity
 import viktor.braus.kplanner.plans.listOfPlans.ListFragment
 
 
-class PlansFragment : Fragment(){
+class PlansFragment : Fragment() {
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         val binding: PlansFragmentBinding = DataBindingUtil.inflate(
-                inflater,
-                R.layout.plans_fragment,
-                container,
-                false
+            inflater,
+            R.layout.plans_fragment,
+            container,
+            false
         )
-        var text:TextView = binding.nameEvent
+        var text: TextView = binding.nameEvent
         val application = requireNotNull(this.activity).application
         val dataSource = PlansDatabase.getInstance(application).plansDAO
-        val plansFactory = PlansFactory(application,dataSource)
-        val viewModel = ViewModelProvider(this,plansFactory).get(PlansViewModel::class.java)
+        val plansFactory = PlansFactory(application, dataSource)
+        val viewModel = ViewModelProvider(this, plansFactory).get(PlansViewModel::class.java)
         binding.plansviewmodel = viewModel
 
         binding.timeButton.setOnClickListener {
@@ -68,14 +69,22 @@ class PlansFragment : Fragment(){
             }, startTime.hour, startTime.minute, true)
             fragmentManager?.let { it1 -> startTimePicker.show(it1, "End Time Picker") }
         }
-        binding.accept.setOnClickListener{
+        binding.accept.setOnClickListener {
             viewModel.onStartTracking()
-
+        }
+        viewModel.showSnackbar.observe(viewLifecycleOwner, Observer {
+            if (it == true) { // Observed state is true.
+                Snackbar.make(
+                    requireActivity().findViewById(android.R.id.content),
+                    getString(R.string.added_message),
+                    Snackbar.LENGTH_LONG // How long to display the message.
+                ).show()
+                viewModel.doneShowingSnackbar()
             }
+        })
         binding.lifecycleOwner = this
-
         return binding.root
-    }
+        }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         // TODO: Use the ViewModel

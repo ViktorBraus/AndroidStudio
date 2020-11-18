@@ -17,6 +17,7 @@ class ListViewModel(application: Application,
 
         var S: Int? = null
     }
+    //////////////////////////////////////////////////////////
     private val _username = MutableLiveData<String>()
     val username : LiveData<String>
         get() = _username
@@ -32,6 +33,13 @@ class ListViewModel(application: Application,
     private val getPlans = plansDAO.getAllPlans()
     val nightsString = Transformations.map(getPlans) { nights ->
         formatNights(nights, application.resources)
+    }
+    private var _showSnackbarEvent = MutableLiveData<Boolean>()
+    val showSnackbar : LiveData<Boolean>
+        get()=_showSnackbarEvent
+    fun doneShowingSnackbar()
+    {
+        _showSnackbarEvent.value = false
     }
     /////////////////Coroutine//////////////////////////////
     var _textTime = MutableLiveData<String>()
@@ -105,5 +113,6 @@ class ListViewModel(application: Application,
             // And clear tonight since it's no longer in the database
             plan.value = null
         }
+        _showSnackbarEvent.value = true
     }
 }
