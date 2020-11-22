@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ListAdapter
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 import viktor.braus.kplanner.R
@@ -67,6 +68,24 @@ class ListFragment : Fragment()
         })
         binding.listViewModel = viewModel
         binding.lifecycleOwner = this
+        val adapter = ListPlansAdapter()
+        binding.mondayText.adapter = adapter
+       viewModel.plans.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.submitList(it)
+            }
+        })
+        viewModel.showSnackbar.observe(viewLifecycleOwner, Observer {
+            if (it == true) { // Observed state is true.
+                Snackbar.make(
+                        requireActivity().findViewById(android.R.id.content),
+                        "парні завдання тепер зелені))",
+                        Snackbar.LENGTH_LONG // How long to display the message.
+                ).show()
+                viewModel.doneShowingSnackbar()
+            }
+        })
+
 
         viewModel.showUser()
         return binding.root

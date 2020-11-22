@@ -24,6 +24,9 @@ interface PlansDAO {
     @Query("SELECT * FROM Planner ORDER BY EventID DESC")
    fun getAllPlans(): LiveData<List<Plans>>
 
+    @Query("SELECT * FROM Planner Where `Day of Event` = 'Понеділок' ")
+    fun getMondayPlans(): LiveData<List<Plans>>
+
     @Query("SELECT * FROM Planner ORDER BY EventID DESC LIMIT 1")
     suspend fun getAll(): Plans?
 }

@@ -42,7 +42,7 @@ class ListViewModel(application: Application,
     val textTime: LiveData<String>
         get() = _textTime
     private var plan = MutableLiveData<Plans?>()
-    private val plans = plansDAO.getAllPlans()
+    val plans = plansDAO.getAllPlans()
     val MplansString = Transformations.map(plans) { nights ->
         MondayFormat(nights, application.resources)
     }
@@ -97,29 +97,6 @@ class ListViewModel(application: Application,
     {
         plansDAO.clear()
 
-    }
-    fun onStartTracking()
-    {
-        val newPlan = Plans()
-        viewModelScope.launch{
-            newPlan.EventName = "TextName"
-            newPlan.Time = "TestTime"
-            insert(newPlan)
-            plan.value = getPlanFromDb()
-
-        }
-        Timber.i("vbvbvbvbvb ${newPlan.EventName}")
-        Timber.i("vbvbvbvbvb ${newPlan.Time}")
-        //MainActivity().returning()
-    }
-    fun onStopTracking()
-    {
-        viewModelScope.launch {
-            var oldPlan = plan.value ?: return@launch
-            oldPlan.EventName = "TextNameccc"
-            oldPlan.EventName = "TestTimecc"
-            update(oldPlan)
-        }
     }
     fun onClear() {
         viewModelScope.launch {

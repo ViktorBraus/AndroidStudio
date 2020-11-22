@@ -53,7 +53,6 @@ fun MondayFormat(plans: List<Plans>, resources: Resources): Spanned {
     val sb = StringBuilder()
     sb.apply{
         plans.forEach {
-            append("<br>")
             if (it.EventDay == "Понеділок")
             {
                 append(resources.getString(R.string.start_time))
@@ -72,141 +71,147 @@ fun MondayFormat(plans: List<Plans>, resources: Resources): Spanned {
     }
     return Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
 }
+fun MondayFormatDay(plans: List<Plans>):Spanned {
+    val sb = StringBuilder()
+    sb.apply {
+        plans.forEach {
+            if (it.EventDay == "Понеділок") {
+                append("<b>Назва Події</b>")
+                append("\t${(it.EventName)}<br>")
+                append("<b>Час Події</b>")
+                if (it.Time != "Інтервал") {
+                    append("\t${(it.Time)}<br>")
+                } else {
+                    append("\t${(it.Time)}<br>")
+                    append("Початок: \t${(it.StartTime)}<br>")
+                    append("Кінець: \t${(it.EndTime)}<br>")
+                }
+            }
+        }
+        return Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
+    }
+}
 fun TuesdayFormat(plans: List<Plans>, resources: Resources): Spanned {
-    val sb = StringBuilder()
-    sb.apply{
-        plans.forEach {
-            append("<br>")
-            if (it.EventDay == "Вівторок")
-            {
-                append(resources.getString(R.string.start_time))
-                append("\t${(it.EventName)}<br>")
-                append(resources.getString(R.string.end_time))
-                if(it.Time != "Інтервал") {
-                    append("\t${(it.Time)}<br>")
-                }
-                else
-                {   append("\t${(it.Time)}<br>")
-                    append("Початок: \t${(it.StartTime)}<br>")
-                    append("Кінець: \t${(it.EndTime)}<br>")
+        val sb = StringBuilder()
+        sb.apply {
+            plans.forEach {
+                if (it.EventDay == "Вівторок") {
+                    append(resources.getString(R.string.start_time))
+                    append("\t${(it.EventName)}<br>")
+                    append(resources.getString(R.string.end_time))
+                    if (it.Time != "Інтервал") {
+                        append("\t${(it.Time)}<br>")
+                    } else {
+                        append("\t${(it.Time)}<br>")
+                        append("Початок: \t${(it.StartTime)}<br>")
+                        append("Кінець: \t${(it.EndTime)}<br>")
+                    }
                 }
             }
         }
+        return Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
     }
-    return Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
-}
-fun WednesdayFormat(plans: List<Plans>, resources: Resources): Spanned {
-    val sb = StringBuilder()
-    sb.apply{
-        plans.forEach {
-            append("<br>")
-            if (it.EventDay == "Середа")
-            {
-                append(resources.getString(R.string.start_time))
-                append("\t${(it.EventName)}<br>")
-                append(resources.getString(R.string.end_time))
-                if(it.Time != "Інтервал") {
-                    append("\t${(it.Time)}<br>")
-                }
-                else
-                {   append("\t${(it.Time)}<br>")
-                    append("Початок: \t${(it.StartTime)}<br>")
-                    append("Кінець: \t${(it.EndTime)}<br>")
+
+    fun WednesdayFormat(plans: List<Plans>, resources: Resources): Spanned {
+        val sb = StringBuilder()
+        sb.apply {
+            plans.forEach {
+                if (it.EventDay == "Середа") {
+                    append(resources.getString(R.string.start_time))
+                    append("\t${(it.EventName)}<br>")
+                    append(resources.getString(R.string.end_time))
+                    if (it.Time != "Інтервал") {
+                        append("\t${(it.Time)}<br>")
+                    } else {
+                        append("\t${(it.Time)}<br>")
+                        append("Початок: \t${(it.StartTime)}<br>")
+                        append("Кінець: \t${(it.EndTime)}<br>")
+                    }
                 }
             }
         }
+        return Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
     }
-    return Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
-}
-fun ThursdayFormat(plans: List<Plans>, resources: Resources): Spanned {
-    val sb = StringBuilder()
-    sb.apply{
-        plans.forEach {
-            append("<br>")
-            if (it.EventDay == "Четвер")
-            {
-                append(resources.getString(R.string.start_time))
-                append("\t${(it.EventName)}<br>")
-                append(resources.getString(R.string.end_time))
-                if(it.Time != "Інтервал") {
-                    append("\t${(it.Time)}<br>")
-                }
-                else
-                {   append("\t${(it.Time)}<br>")
-                    append("Початок: \t${(it.StartTime)}<br>")
-                    append("Кінець: \t${(it.EndTime)}<br>")
+    fun ThursdayFormat(plans: List<Plans>, resources: Resources): Spanned {
+        val sb = StringBuilder()
+        sb.apply {
+            plans.forEach {
+                if (it.EventDay == "Четвер") {
+                    append(resources.getString(R.string.start_time))
+                    append("\t${(it.EventName)}<br>")
+                    append(resources.getString(R.string.end_time))
+                    if (it.Time != "Інтервал") {
+                        append("\t${(it.Time)}<br>")
+                    } else {
+                        append("\t${(it.Time)}<br>")
+                        append("Початок: \t${(it.StartTime)}<br>")
+                        append("Кінець: \t${(it.EndTime)}<br>")
+                    }
                 }
             }
         }
+        return Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
     }
-    return Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
-}
-fun FridayFormat(plans: List<Plans>, resources: Resources): Spanned {
-    val sb = StringBuilder()
-    sb.apply{
-        plans.forEach {
-            append("<br>")
-            if (it.EventDay == "П'ятниця")
-            {
-                append(resources.getString(R.string.start_time))
-                append("\t${(it.EventName)}<br>")
-                append(resources.getString(R.string.end_time))
-                if(it.Time != "Інтервал") {
-                    append("\t${(it.Time)}<br>")
-                }
-                else
-                {   append("\t${(it.Time)}<br>")
-                    append("Початок: \t${(it.StartTime)}<br>")
-                    append("Кінець: \t${(it.EndTime)}<br>")
+
+    fun FridayFormat(plans: List<Plans>, resources: Resources): Spanned {
+        val sb = StringBuilder()
+        sb.apply {
+            plans.forEach {
+                if (it.EventDay == "П'ятниця") {
+                    append(resources.getString(R.string.start_time))
+                    append("\t${(it.EventName)}<br>")
+                    append(resources.getString(R.string.end_time))
+                    if (it.Time != "Інтервал") {
+                        append("\t${(it.Time)}<br>")
+                    } else {
+                        append("\t${(it.Time)}<br>")
+                        append("Початок: \t${(it.StartTime)}<br>")
+                        append("Кінець: \t${(it.EndTime)}<br>")
+                    }
                 }
             }
         }
+        return Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
     }
-    return Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
-}
-fun SaturdayFormat(plans: List<Plans>, resources: Resources): Spanned {
-    val sb = StringBuilder()
-    sb.apply{
-        plans.forEach {
-            append("<br>")
-            if (it.EventDay == "Субота")
-            {
-                append(resources.getString(R.string.start_time))
-                append("\t${(it.EventName)}<br>")
-                append(resources.getString(R.string.end_time))
-                if(it.Time != "Інтервал") {
-                    append("\t${(it.Time)}<br>")
-                }
-                else
-                {   append("\t${(it.Time)}<br>")
-                    append("Початок: \t${(it.StartTime)}<br>")
-                    append("Кінець: \t${(it.EndTime)}<br>")
+
+    fun SaturdayFormat(plans: List<Plans>, resources: Resources): Spanned {
+        val sb = StringBuilder()
+        sb.apply {
+            plans.forEach {
+                if (it.EventDay == "Субота") {
+                    append(resources.getString(R.string.start_time))
+                    append("\t${(it.EventName)}<br>")
+                    append(resources.getString(R.string.end_time))
+                    if (it.Time != "Інтервал") {
+                        append("\t${(it.Time)}<br>")
+                    } else {
+                        append("\t${(it.Time)}<br>")
+                        append("Початок: \t${(it.StartTime)}<br>")
+                        append("Кінець: \t${(it.EndTime)}<br>")
+                    }
                 }
             }
         }
+        return Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
     }
-    return Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
-}
-fun SundayFormat(plans: List<Plans>, resources: Resources): Spanned {
-    val sb = StringBuilder()
-    sb.apply{
-        plans.forEach {
-            append("<br>")
-            if (it.EventDay == "Неділя")
-            {
-                append(resources.getString(R.string.start_time))
-                append("\t${(it.EventName)}<br>")
-                append(resources.getString(R.string.end_time))
-                if(it.Time != "Інтервал") {
-                    append("\t${(it.Time)}<br>")
-                }
-                else
-                {   append("\t${(it.Time)}<br>")
-                    append("Початок: \t${(it.StartTime)}<br>")
-                    append("Кінець: \t${(it.EndTime)}<br>")
+
+    fun SundayFormat(plans: List<Plans>, resources: Resources): Spanned {
+        val sb = StringBuilder()
+        sb.apply {
+            plans.forEach {
+                if (it.EventDay == "Неділя") {
+                    append(resources.getString(R.string.start_time))
+                    append("\t${(it.EventName)}<br>")
+                    append(resources.getString(R.string.end_time))
+                    if (it.Time != "Інтервал") {
+                        append("\t${(it.Time)}<br>")
+                    } else {
+                        append("\t${(it.Time)}<br>")
+                        append("Початок: \t${(it.StartTime)}<br>")
+                        append("Кінець: \t${(it.EndTime)}<br>")
+                    }
                 }
             }
         }
+        return Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
     }
-    return Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
-}

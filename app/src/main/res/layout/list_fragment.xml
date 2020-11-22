@@ -6,15 +6,11 @@
         <variable
             name="listViewModel"
             type="viktor.braus.kplanner.plans.listOfPlans.ListViewModel"/>
-         <variable
-        name="plansViewModel"
-        type="viktor.braus.kplanner.plans.plansCreating.PlansViewModel"/>
 </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
             android:layout_width="wrap_content"
@@ -65,16 +61,17 @@
                     android:textSize="24sp"
                     tools:text="Понеділок" />
 
-                <TextView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/mondayText"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_row="2"
                     android:layout_column="0"
                     android:layout_gravity="fill"
-                    android:text="@{listViewModel.MplansString}"
                     android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="4" />
 
                 <Button
                     android:id="@+id/mondayButton"
@@ -107,11 +104,12 @@
                     android:id="@+id/tuesdayText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{listViewModel.TplansString}"
                     android:layout_row="4"
                     android:layout_column="0"
                     android:layout_gravity="fill"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#FFFFFF"
+                    android:text="@{listViewModel.TplansString}"
+                    />
 
                 <Button
                     android:id="@+id/tuesdayButton"
@@ -142,11 +140,11 @@
                     android:id="@+id/wednesdayText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{listViewModel.WplansString}"
                     android:layout_row="6"
                     android:layout_column="0"
                     android:layout_gravity="fill"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#FFFFFF"
+                    android:text="@{listViewModel.WplansString}"/>
 
                 <Button
                     android:id="@+id/wednesdayButton"
@@ -177,11 +175,12 @@
                     android:id="@+id/thursdayText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{listViewModel.ThplansString}"
                     android:layout_row="8"
                     android:layout_column="0"
                     android:layout_gravity="fill"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#FFFFFF"
+                    android:text="@{listViewModel.ThplansString}"
+                    />
 
                 <Button
                     android:id="@+id/thursdayButton"
@@ -212,11 +211,12 @@
                     android:id="@+id/fridayText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{listViewModel.FplansString}"
                     android:layout_row="10"
                     android:layout_column="0"
                     android:layout_gravity="fill"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#FFFFFF"
+                    android:text="@{listViewModel.FplansString}"
+                    />
 
                 <Button
                     android:id="@+id/fridayButton"
@@ -263,11 +263,12 @@
                     android:id="@+id/saturdayText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{listViewModel.StplansString}"
                     android:layout_row="13"
                     android:layout_column="0"
                     android:layout_gravity="fill"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#FFFFFF"
+                    android:text="@{listViewModel.StplansString}"
+                     />
 
                 <TextView
                     android:id="@+id/saturdayTime"
@@ -306,11 +307,11 @@
                     android:id="@+id/sundayText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{listViewModel.SplansString}"
                     android:layout_row="15"
                     android:layout_column="0"
                     android:layout_gravity="fill"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#FFFFFF"
+                    android:text="@{listViewModel.SplansString}"/>
 
                 <Button
                     android:id="@+id/sundayButton"
@@ -357,11 +358,8 @@
                     android:text="Видалити дані"
                     android:textColor="#8BC34A"
                     android:textSize="18sp" />
-
-                <!--@{() -> listViewModel.showUser}-->
-
             </GridLayout>
-        </androidx.core.widget.NestedScrollView>
+</androidx.core.widget.NestedScrollView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
