@@ -70,7 +70,7 @@ class ListFragment : Fragment()
         binding.lifecycleOwner = this
         val adapter = ListPlansAdapter()
         binding.mondayText.adapter = adapter
-       viewModel.plans.observe(viewLifecycleOwner, Observer {
+        viewModel.plans.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
             }
