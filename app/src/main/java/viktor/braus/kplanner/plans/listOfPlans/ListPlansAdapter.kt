@@ -26,21 +26,19 @@ class ListPlansAdapter : ListAdapter<Plans, ListPlansAdapter.ViewHolder>(LisDiff
 
     class ViewHolder private constructor(binding: TextItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
         val mondayText = binding.qualityImage
+
         @SuppressLint("SetTextI18n")
         fun bind(item: Plans)
         {
             if (item.EventDay == "Понеділок" )
             {
-                if(item.EventID.toInt() % 2 == 0)
-                {
+                if (item.EventID.toInt() % 2 == 0) {
                     mondayText.setTextColor(Color.GREEN)
-                }
-                else
+                } else
                 {
                     mondayText.setTextColor(Color.WHITE)
                 }
                 mondayText.text = "Назва Події:     " + item.EventName + "\nЧас події:      " + item.Time
-
             }
         }
         companion object {

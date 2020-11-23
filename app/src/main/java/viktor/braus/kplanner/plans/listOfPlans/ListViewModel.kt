@@ -7,13 +7,20 @@ import timber.log.Timber
 import viktor.braus.kplanner.entity.Plans
 import viktor.braus.kplanner.entity.PlansDAO
 import viktor.braus.kplanner.mainPage.*
+import viktor.braus.kplanner.network.WeatherApi
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import viktor.braus.kplanner.network.WeatherProperty
+import java.util.*
+
 //import viktor.braus.kplanner.entity.Plans
 
 class ListViewModel(application: Application,
         private val plansDAO: PlansDAO): AndroidViewModel(application)
 {
     companion object {
-
+        const val cityName: String = "Chernivtsi"
         var S: Int? = null
     }
     //////////////////////////////////////////////////////////
@@ -104,7 +111,38 @@ class ListViewModel(application: Application,
             clear()
             // And clear tonight since it's no longer in the database
             plan.value = null
+            _response.value = null
         }
         _showSnackbarEvent.value = true
     }
+    ////////Network//////////////////////////////////////////////////
+    // The internal MutableLiveData String that stores the most recent response
+    private val _response = MutableLiveData<String>()
+
+    // The external immutable LiveData for the response String
+    val response: LiveData<String>
+        get() = _response
+
+    /**
+     * Call getMarsRealEstateProperties() on init so we can display status immediately.
+     */
+    fun setWeather()
+    {
+        getMarsRealEstateProperties()
+    }
+    /**
+     * Sets the value of the response LiveData to the Mars API status or the successful number of
+     * Mars properties retrieved.
+     */
+    private fun getMarsRealEstateProperties() {
+        WeatherApi.retrofitService.getProperties().enqueue( object: Callback<WeatherProperty> {
+            override fun onFailure(call: Call<WeatherProperty>, t: Throwable) {
+                _response.value = "Failure: " + t.message
+            }
+            override fun onResponse(call: Call<WeatherProperty>, response: Response<WeatherProperty>) {
+                _response.value = "Прогноз для міста ${response.body()?.name} на сьогодні: ${response.body()?.main?.temp} 'C \n Відчувається як: ${response.body()?.main?.feels_like} 'C "
+            }
+        })
+    }
+
 }
