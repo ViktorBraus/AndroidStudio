@@ -16,7 +16,8 @@ import org.threeten.bp.LocalTime
 import timber.log.Timber
 import viktor.braus.kplanner.R
 import viktor.braus.kplanner.databinding.PlansFragmentBinding
-import viktor.braus.kplanner.entity.PlansDatabase
+import viktor.braus.kplanner.entity.NewPlansDatabase
+import viktor.braus.kplanner.entity.getDatabase
 import viktor.braus.kplanner.mainPage.MainActivity
 
 
@@ -34,7 +35,7 @@ class PlansFragment : Fragment() {
         Timber.i("DDay: ${MainActivity.dayText}")
         var text: TextView = binding.nameEvent
         val application = requireNotNull(this.activity).application
-        val dataSource = PlansDatabase.getInstance(application).plansDAO
+        val dataSource = getDatabase(application).plansDAO
         val plansFactory = PlansFactory(application, dataSource)
         val viewModel = ViewModelProvider(this, plansFactory).get(PlansViewModel::class.java)
         binding.plansviewmodel = viewModel

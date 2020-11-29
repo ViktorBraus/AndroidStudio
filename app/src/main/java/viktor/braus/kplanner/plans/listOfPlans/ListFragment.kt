@@ -13,7 +13,8 @@ import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 import viktor.braus.kplanner.R
 import viktor.braus.kplanner.databinding.ListFragmentBinding
-import viktor.braus.kplanner.entity.PlansDatabase
+import viktor.braus.kplanner.entity.NewPlansDatabase
+import viktor.braus.kplanner.entity.getDatabase
 
 class ListFragment : Fragment()
 {
@@ -53,8 +54,9 @@ class ListFragment : Fragment()
                 false
         )
         val application = requireNotNull(this.activity).application
-        val dataSource = PlansDatabase.getInstance(application).plansDAO
-        val listFactory = ListFactory(application,dataSource)
+        val dataSource = getDatabase(application).plansDAO
+        val weatherdataSource = getDatabase(application).weatherDetailsDAO
+        val listFactory = ListFactory(application,dataSource,weatherdataSource)
         val viewModel = ViewModelProvider(this, listFactory).get(ListViewModel::class.java)
         viewModel.showSnackbar.observe(viewLifecycleOwner, Observer {
             if (it == true) { // Observed state is true.

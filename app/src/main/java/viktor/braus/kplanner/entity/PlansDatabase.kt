@@ -5,30 +5,25 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Plans::class], version = 4,exportSchema = false)
-abstract class PlansDatabase : RoomDatabase()
-{
+@Database(entities = [Plans::class,Weather::class], version = 4)
+abstract class NewPlansDatabase : RoomDatabase() {
     abstract val plansDAO: PlansDAO
-    //abstract val mondayPlanDAO: MondayPlanDAO
-    companion object{
-        @Volatile
-        private var INSTANCE: PlansDatabase? = null
-
-        fun getInstance(context: Context):PlansDatabase{
-              synchronized(this){
-                  var instance = INSTANCE
-                  if(instance==null)
+    abstract val weatherDetailsDAO: WeatherDbDao
+}
+private lateinit var INSTANCE: NewPlansDatabase
+fun getDatabase(context: Context):NewPlansDatabase
+{
+    synchronized(NewPlansDatabase::class.java)
+    {
+                  if(!::INSTANCE.isInitialized)
                   {
-                      instance = Room.databaseBuilder(
+                      INSTANCE = Room.databaseBuilder(
                           context.applicationContext,
-                          PlansDatabase::class.java,
-                          "All Plans"
-                      ) .fallbackToDestructiveMigration()
+                          NewPlansDatabase::class.java,
+                          "Plans"
+                      ).fallbackToDestructiveMigration()
                           .build()
-                      INSTANCE = instance
                   }
-                  return instance
               }
-        }
-    }
+    return INSTANCE
 }

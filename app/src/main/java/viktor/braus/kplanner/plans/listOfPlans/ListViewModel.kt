@@ -4,21 +4,24 @@ import android.app.Application
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import viktor.braus.kplanner.entity.Plans
-import viktor.braus.kplanner.entity.PlansDAO
 import viktor.braus.kplanner.mainPage.*
 import viktor.braus.kplanner.network.WeatherApi
+import viktor.braus.kplanner.network.asDomainModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import viktor.braus.kplanner.network.WeatherProperty
-import java.util.*
-
-//import viktor.braus.kplanner.entity.Plans
+import retrofit2.await
+import viktor.braus.kplanner.entity.*
+import viktor.braus.kplanner.entity.WeatherDbDao
+import java.io.IOException
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 class ListViewModel(application: Application,
-        private val plansDAO: PlansDAO): AndroidViewModel(application)
+        private val plansDAO: PlansDAO,
+        private val weatherDbDao: WeatherDbDao): AndroidViewModel(application)
 {
+    private val database = getDatabase(application)
+    private val videosRepository = WeatherRepository(database)
     companion object {
         const val cityName: String = "Chernivtsi"
         var S: Int? = null
@@ -29,8 +32,9 @@ class ListViewModel(application: Application,
         get() = _username
     init {
         _username.value = ""
-    }
 
+    }
+    val playlist = videosRepository.weather
     fun showUser():String
     {
         Timber.i("-------------------------------------")
@@ -71,38 +75,10 @@ class ListViewModel(application: Application,
     val SplansString = Transformations.map(plans) { nights ->
         SundayFormat(nights, application.resources)
     }
-    init
-    {
-        initializePlans()
-
-    }
-    private fun initializePlans()
-    {
-        viewModelScope.launch {
-            plan.value = getPlanFromDb()
-        }
-    }
-    private suspend fun getPlanFromDb(): Plans?
-    {
-
-        var planning = plansDAO.getAll()
-        if (planning?.EventName != "") {
-            planning=null
-        }
-        return planning
-    }
-    private suspend fun insert(plan: Plans)
-    {
-        plansDAO.insert(plan)
-    }
-    private suspend fun update(plan: Plans)
-    {
-        plansDAO.update(plan)
-
-    }
     private suspend fun clear()
     {
         plansDAO.clear()
+        weatherDbDao.clear()
 
     }
     fun onClear() {
@@ -120,29 +96,25 @@ class ListViewModel(application: Application,
     private val _response = MutableLiveData<String>()
 
     // The external immutable LiveData for the response String
-    val response: LiveData<String>
-        get() = _response
 
-    /**
-     * Call getMarsRealEstateProperties() on init so we can display status immediately.
-     */
     fun setWeather()
     {
-        getMarsRealEstateProperties()
+        viewModelScope.launch {
+            videosRepository.refreshVideos()
+        }
     }
     /**
      * Sets the value of the response LiveData to the Mars API status or the successful number of
      * Mars properties retrieved.
      */
-    private fun getMarsRealEstateProperties() {
-        WeatherApi.retrofitService.getProperties().enqueue( object: Callback<WeatherProperty> {
-            override fun onFailure(call: Call<WeatherProperty>, t: Throwable) {
-                _response.value = "Failure: " + t.message
-            }
-            override fun onResponse(call: Call<WeatherProperty>, response: Response<WeatherProperty>) {
-                _response.value = "Прогноз для міста ${response.body()?.name} на сьогодні: ${response.body()?.main?.temp} 'C \n Відчувається як: ${response.body()?.main?.feels_like} 'C "
-            }
-        })
-    }
 
+    class Factory(val app: Application,val plansDAO: PlansDAO, val weatherDbDao: WeatherDbDao) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(ListViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return ListViewModel(app,plansDAO,weatherDbDao) as T
+            }
+            throw IllegalArgumentException("Unable to construct viewmodel")
+        }
+    }
 }

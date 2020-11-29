@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import timber.log.Timber
 import viktor.braus.kplanner.R
 import viktor.braus.kplanner.entity.PlansDAO
-import viktor.braus.kplanner.entity.PlansDatabase
+import viktor.braus.kplanner.entity.NewPlansDatabase
 import viktor.braus.kplanner.menu.factoryMethod.About_Fragment
 import viktor.braus.kplanner.menu.viewModel.Information_fragment
 import viktor.braus.kplanner.plans.listOfPlans.ListFragment
