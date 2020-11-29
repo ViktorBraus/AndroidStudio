@@ -3,6 +3,7 @@ package viktor.braus.kplanner.mainPage
 import android.annotation.SuppressLint
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -13,6 +14,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.work.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import viktor.braus.kplanner.R
 import viktor.braus.kplanner.entity.PlansDAO
@@ -24,8 +29,10 @@ import viktor.braus.kplanner.plans.plansCreating.PlansFactory
 import viktor.braus.kplanner.plans.plansCreating.PlansFragment
 import viktor.braus.kplanner.plans.plansCreating.PlansViewModel
 import viktor.braus.kplanner.timer.TTimer
+import viktor.braus.kplanner.work.RefreshDataWorker
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 //"Перейшов на мову Kotlin, 5 Лабораторна робота"
@@ -44,6 +51,27 @@ class MainActivity : AppCompatActivity() {
     {
         K_REV = "k_rev"
     }
+    val applicationScope = CoroutineScope(Dispatchers.Default)
+    private fun delayedInit() = applicationScope.launch { setupRecurringWork() }
+    private fun setupRecurringWork() {
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.UNMETERED)
+            .setRequiresBatteryNotLow(true)
+            .setRequiresCharging(true)
+            .apply {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    setRequiresDeviceIdle(true)
+                }
+            }.build()
+        val repeatingRequest
+                = PeriodicWorkRequestBuilder<RefreshDataWorker>(1, TimeUnit.MINUTES)
+            .setConstraints(constraints)
+            .build()
+        WorkManager.getInstance().enqueueUniquePeriodicWork(
+            RefreshDataWorker.WORK_NAME,
+            ExistingPeriodicWorkPolicy.KEEP,
+            repeatingRequest)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_page)
@@ -57,6 +85,7 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState != null) {
             revenue = savedInstanceState.getInt(K_REV, 1)
         }
+        delayedInit()
 
     }
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {

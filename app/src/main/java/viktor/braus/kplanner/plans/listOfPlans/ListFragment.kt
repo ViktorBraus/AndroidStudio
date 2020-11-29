@@ -1,5 +1,6 @@
 package viktor.braus.kplanner.plans.listOfPlans
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,16 +10,21 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ListAdapter
+import androidx.work.*
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import viktor.braus.kplanner.R
 import viktor.braus.kplanner.databinding.ListFragmentBinding
 import viktor.braus.kplanner.entity.NewPlansDatabase
 import viktor.braus.kplanner.entity.getDatabase
+import viktor.braus.kplanner.work.RefreshDataWorker
+import java.util.concurrent.TimeUnit
 
 class ListFragment : Fragment()
 {
-
     override fun onStart() {
         super.onStart()
         Timber.i("----------onStart Called.----------")
