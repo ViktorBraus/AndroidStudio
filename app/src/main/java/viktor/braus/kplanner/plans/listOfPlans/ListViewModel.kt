@@ -92,10 +92,7 @@ class ListViewModel(application: Application,
         _showSnackbarEvent.value = true
     }
     ////////Network//////////////////////////////////////////////////
-    // The internal MutableLiveData String that stores the most recent response
     private val _response = MutableLiveData<String>()
-
-    // The external immutable LiveData for the response String
 
     fun setWeather()
     {
@@ -103,11 +100,6 @@ class ListViewModel(application: Application,
             videosRepository.refreshVideos()
         }
     }
-    /**
-     * Sets the value of the response LiveData to the Mars API status or the successful number of
-     * Mars properties retrieved.
-     */
-
     class Factory(val app: Application,val plansDAO: PlansDAO, val weatherDbDao: WeatherDbDao) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(ListViewModel::class.java)) {

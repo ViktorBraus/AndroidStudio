@@ -80,4 +80,11 @@ KOROLENKO</string>
     <string name="end_time"><![CDATA[<b>Час Події:</b>]]></string>
     <string name="added_message">Дані були успішно додані до бази)))</string>
     <string name="cleared_message">Дані були успішно видалені з бази)))</string>
+    <string name="Title">Про разработчика</string>
+    <string name="show_photos">Show Photos</string>
+    <string name="secondphoto">secondPhoto</string>
+    <string name="thirdphoto">thirdPhoto</string>
+    <string name="fourthphoto">fourthPhoto</string>
+    <string name="firstphoto">firstPhoto</string>
+    <string name="n">Прогноз <b></b> Погоди</string>
 </resources>

@@ -8,34 +8,27 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.work.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import viktor.braus.kplanner.R
-import viktor.braus.kplanner.entity.PlansDAO
-import viktor.braus.kplanner.entity.NewPlansDatabase
 import viktor.braus.kplanner.menu.factoryMethod.About_Fragment
 import viktor.braus.kplanner.menu.viewModel.Information_fragment
 import viktor.braus.kplanner.plans.listOfPlans.ListFragment
-import viktor.braus.kplanner.plans.plansCreating.PlansFactory
 import viktor.braus.kplanner.plans.plansCreating.PlansFragment
-import viktor.braus.kplanner.plans.plansCreating.PlansViewModel
 import viktor.braus.kplanner.timer.TTimer
 import viktor.braus.kplanner.work.RefreshDataWorker
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
-//"Перейшов на мову Kotlin, 5 Лабораторна робота"
 class MainActivity : AppCompatActivity() {
     var d: String? = null
     var fragment = MainFragment()
@@ -72,7 +65,9 @@ class MainActivity : AppCompatActivity() {
             ExistingPeriodicWorkPolicy.KEEP,
             repeatingRequest)
     }
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_page)
         supportFragmentManager
@@ -107,11 +102,11 @@ class MainActivity : AppCompatActivity() {
         Timber.i("----------onPause Called.----------")
     }
 
-    override fun onDestroy() {
+/*    override fun onDestroy() {
         super.onDestroy()
         Timber.i("----------onDestroy Called.----------")
         TTimer.stopTimerTotal()
-    }
+    }*/
     override fun onResume() {
         super.onResume()
         TTimer.startTimerFocused()
@@ -228,7 +223,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun sendMessage(view: View) {
-        val editText = findViewById<View>(R.id.edit_message) as EditText
+        val editText = findViewById<View>(R.id.NameField) as EditText
         var message = editText.text.toString()
         Timber.plant()
         Timber.i("------------------sendmessage method used--------------------")

@@ -1,27 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context = ".MainActivity">
 <data>
         <variable
             name="listViewModel"
             type="viktor.braus.kplanner.plans.listOfPlans.ListViewModel"/>
 </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:fillViewport="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
+            android:scrollbars="horizontal">
 
             <GridLayout
                 android:layout_width="wrap_content"
@@ -35,10 +32,11 @@
 
                 <TextView
                     android:id="@+id/name"
-                    android:layout_width="127dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_row="0"
-                    android:layout_column="1"
+                    android:layout_column="0"
+                    android:fontFamily="@font/yeseva_one"
                     android:gravity="center"
                     android:text="@{listViewModel.showUser}"
                     android:textColor="#FFFFFF"
@@ -50,12 +48,13 @@
 
                 <TextView
                     android:id="@+id/name2"
-                    android:layout_width="155dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_row="0"
                     android:layout_column="0"
-                    android:layout_gravity="center|fill"
-                    android:gravity="fill"
+                    android:layout_gravity="end"
+                    android:fontFamily="@font/yeseva_one"
+                    android:gravity="end"
                     android:text="@{listViewModel.playlist.toString()}"
                     android:textColor="#53FF3F"
                     android:textSize="16sp"
@@ -71,11 +70,11 @@
                     android:layout_row="1"
                     android:layout_column="0"
                     android:layout_gravity="fill"
+                    android:fontFamily="@font/yeseva_one"
                     android:text="@string/Monday"
                     android:textColor="#FFFFFF"
                     android:textSize="24sp"
                     tools:text="Понеділок" />
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/mondayText"
                     android:layout_width="wrap_content"
@@ -86,7 +85,7 @@
                     android:textColor="#FFFFFF"
                     android:textSize="16sp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:itemCount="4" />
+                    tools:itemCount="9" />
 
                 <Button
                     android:id="@+id/mondayButton"
@@ -97,6 +96,7 @@
                     android:layout_gravity="center"
                     android:background="#673AB7"
                     android:clickable="true"
+                    android:fontFamily="@font/yeseva_one"
                     android:minHeight="28dip"
                     android:onClick="Planning"
                     android:text="@string/NewAction"
@@ -110,6 +110,7 @@
                     android:layout_row="3"
                     android:layout_column="0"
                     android:layout_gravity="fill"
+                    android:fontFamily="@font/yeseva_one"
                     android:text="@string/Tuesday"
                     android:textColor="#FFFFFF"
                     android:textSize="24sp"
@@ -122,9 +123,9 @@
                     android:layout_row="4"
                     android:layout_column="0"
                     android:layout_gravity="fill"
-                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/yeseva_one"
                     android:text="@{listViewModel.TplansString}"
-                    />
+                    android:textColor="#FFFFFF" />
 
                 <Button
                     android:id="@+id/tuesdayButton"
@@ -133,6 +134,7 @@
                     android:layout_row="4"
                     android:layout_column="1"
                     android:background="#673AB7"
+                    android:fontFamily="@font/yeseva_one"
                     android:minHeight="28dip"
                     android:onClick="Planning"
                     android:text="@string/NewAction"
@@ -146,6 +148,7 @@
                     android:layout_row="5"
                     android:layout_column="0"
                     android:layout_gravity="fill"
+                    android:fontFamily="@font/yeseva_one"
                     android:text="@string/Wednesday"
                     android:textColor="#FFFFFF"
                     android:textSize="24sp"
@@ -158,8 +161,9 @@
                     android:layout_row="6"
                     android:layout_column="0"
                     android:layout_gravity="fill"
-                    android:textColor="#FFFFFF"
-                    android:text="@{listViewModel.WplansString}"/>
+                    android:fontFamily="@font/yeseva_one"
+                    android:text="@{listViewModel.WplansString}"
+                    android:textColor="#FFFFFF" />
 
                 <Button
                     android:id="@+id/wednesdayButton"
@@ -168,6 +172,7 @@
                     android:layout_row="6"
                     android:layout_column="1"
                     android:background="#673AB7"
+                    android:fontFamily="@font/yeseva_one"
                     android:minHeight="28dip"
                     android:onClick="Planning"
                     android:text="@string/NewAction"
@@ -181,6 +186,7 @@
                     android:layout_row="7"
                     android:layout_column="0"
                     android:layout_gravity="fill"
+                    android:fontFamily="@font/yeseva_one"
                     android:text="@string/Thursday"
                     android:textColor="#FFFFFF"
                     android:textSize="24sp"
@@ -193,9 +199,9 @@
                     android:layout_row="8"
                     android:layout_column="0"
                     android:layout_gravity="fill"
-                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/yeseva_one"
                     android:text="@{listViewModel.ThplansString}"
-                    />
+                    android:textColor="#FFFFFF" />
 
                 <Button
                     android:id="@+id/thursdayButton"
@@ -204,6 +210,7 @@
                     android:layout_row="8"
                     android:layout_column="1"
                     android:background="#673AB7"
+                    android:fontFamily="@font/yeseva_one"
                     android:minHeight="28dip"
                     android:onClick="Planning"
                     android:text="@string/NewAction"
@@ -217,6 +224,7 @@
                     android:layout_row="9"
                     android:layout_column="0"
                     android:layout_gravity="fill"
+                    android:fontFamily="@font/yeseva_one"
                     android:text="@string/Friday"
                     android:textColor="#FFFFFF"
                     android:textSize="24sp"
@@ -229,9 +237,9 @@
                     android:layout_row="10"
                     android:layout_column="0"
                     android:layout_gravity="fill"
-                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/yeseva_one"
                     android:text="@{listViewModel.FplansString}"
-                    />
+                    android:textColor="#FFFFFF" />
 
                 <Button
                     android:id="@+id/fridayButton"
@@ -240,6 +248,7 @@
                     android:layout_row="10"
                     android:layout_column="1"
                     android:background="#673AB7"
+                    android:fontFamily="@font/yeseva_one"
                     android:minHeight="28dip"
                     android:onClick="Planning"
                     android:text="@string/NewAction"
@@ -254,6 +263,7 @@
                     android:layout_column="0"
                     android:layout_columnSpan="2"
                     android:layout_gravity="center|fill"
+                    android:fontFamily="@font/yeseva_one"
                     android:foregroundGravity="center"
                     android:gravity="center"
                     android:text="@string/Weekend"
@@ -269,6 +279,7 @@
                     android:layout_row="12"
                     android:layout_column="0"
                     android:layout_gravity="fill"
+                    android:fontFamily="@font/yeseva_one"
                     android:text="@string/Saturday"
                     android:textColor="#FFFFFF"
                     android:textSize="24sp"
@@ -281,9 +292,9 @@
                     android:layout_row="13"
                     android:layout_column="0"
                     android:layout_gravity="fill"
-                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/yeseva_one"
                     android:text="@{listViewModel.StplansString}"
-                     />
+                    android:textColor="#FFFFFF" />
 
                 <TextView
                     android:id="@+id/saturdayTime"
@@ -300,6 +311,7 @@
                     android:layout_row="13"
                     android:layout_column="1"
                     android:background="#673AB7"
+                    android:fontFamily="@font/yeseva_one"
                     android:minHeight="28dip"
                     android:onClick="Planning"
                     android:text="@string/NewAction"
@@ -313,6 +325,7 @@
                     android:layout_row="14"
                     android:layout_column="0"
                     android:layout_gravity="fill"
+                    android:fontFamily="@font/yeseva_one"
                     android:text="@string/Sunday"
                     android:textColor="#FFFFFF"
                     android:textSize="24sp"
@@ -325,8 +338,9 @@
                     android:layout_row="15"
                     android:layout_column="0"
                     android:layout_gravity="fill"
-                    android:textColor="#FFFFFF"
-                    android:text="@{listViewModel.SplansString}"/>
+                    android:fontFamily="@font/yeseva_one"
+                    android:text="@{listViewModel.SplansString}"
+                    android:textColor="#FFFFFF" />
 
                 <Button
                     android:id="@+id/sundayButton"
@@ -335,6 +349,7 @@
                     android:layout_row="15"
                     android:layout_column="1"
                     android:background="#673AB7"
+                    android:fontFamily="@font/yeseva_one"
                     android:minHeight="28dip"
                     android:onClick="Planning"
                     android:text="@string/NewAction"
@@ -346,16 +361,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_row="16"
+                    android:layout_rowSpan="2"
                     android:layout_column="0"
                     android:layout_columnSpan="2"
                     android:layout_gravity="center|top|end"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
                     android:background="#673AB7"
+                    android:fontFamily="@font/yeseva_one"
                     android:onClick="BackWard"
                     android:text="@string/NewAction1"
                     android:textColor="#8BC34A"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <Button
                     android:id="@+id/button4"
@@ -364,33 +381,59 @@
                     android:layout_row="16"
                     android:layout_rowWeight="10"
                     android:layout_column="0"
+                    android:layout_columnSpan="2"
                     android:layout_gravity="start|top"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
                     android:background="#673AB7"
+                    android:fontFamily="@font/yeseva_one"
                     android:onClick="@{() -> listViewModel.onClear()}"
-                    android:text="Видалити дані"
+                    android:text="Видалити \n дані"
                     android:textColor="#8BC34A"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <Button
                     android:id="@+id/button3"
-                    android:layout_width="match_parent"
+                    android:layout_width="108dp"
                     android:layout_height="match_parent"
                     android:layout_row="16"
+                    android:layout_rowSpan="2"
                     android:layout_rowWeight="10"
                     android:layout_column="0"
-                    android:layout_gravity="top|end"
+                    android:layout_columnSpan="2"
+                    android:layout_gravity="center|top"
                     android:layout_marginTop="20dp"
-                    android:layout_marginEnd="10dp"
                     android:background="#673AB7"
+                    android:fontFamily="@font/yeseva_one"
+                    android:gravity="center"
                     android:onClick="@{() -> listViewModel.setWeather()}"
-                    android:text="Прогноз\n Погоди"
+                    android:text="@string/n"
                     android:textColor="#8BC34A"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
+
+
             </GridLayout>
-</androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_gravity="top|end"
+            android:layout_marginEnd="20dp"
+            android:backgroundTintMode="add"
+            android:baselineAlignBottom="false"
+            android:clickable="true"
+            android:contextClickable="false"
+            android:onClick="@{() -> listViewModel.setWeather()}"
+            android:src="@android:drawable/ic_input_add"
+            android:tint="#8BC34A"
+            app:backgroundTint="#9D2CFF"
+            app:fabSize="auto"
+            app:maxImageSize="40sp"
+            app:rippleColor="#3D0057"
+            app:useCompatPadding="false" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

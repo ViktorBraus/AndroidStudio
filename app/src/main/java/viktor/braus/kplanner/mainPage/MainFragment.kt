@@ -22,7 +22,6 @@ class MainFragment : Fragment()
             container,
             false
         )
-
         binding.lifecycleOwner = this
         return binding.root
     }

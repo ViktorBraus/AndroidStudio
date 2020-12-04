@@ -39,10 +39,10 @@ class About_Fragment : Fragment() {
         binding.lifecycleOwner = this
 
         viewModel.nameOfPhotos.observe(viewLifecycleOwner, Observer { p ->
-                binding.textView23.text = viewModel.nameOfPhotos.value?.get(0) ?: ""
-                binding.textView24.text = viewModel.nameOfPhotos.value?.get(1) ?: ""
-                binding.textView25.text = viewModel.nameOfPhotos.value?.get(2) ?: ""
-                binding.textView26.text = viewModel.nameOfPhotos.value?.get(3) ?: ""
+                binding.First.text = viewModel.nameOfPhotos.value?.get(0) ?: ""
+                binding.Second.text = viewModel.nameOfPhotos.value?.get(1) ?: ""
+                binding.Third.text = viewModel.nameOfPhotos.value?.get(2) ?: ""
+                binding.Fourth.text = viewModel.nameOfPhotos.value?.get(3) ?: ""
             })
         viewModel.eventAbout.observe(viewLifecycleOwner, Observer { playAgain ->
             if (playAgain)

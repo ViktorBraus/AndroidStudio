@@ -20,18 +20,19 @@ import viktor.braus.kplanner.R
 import viktor.braus.kplanner.databinding.ListFragmentBinding
 import viktor.braus.kplanner.entity.NewPlansDatabase
 import viktor.braus.kplanner.entity.getDatabase
+import viktor.braus.kplanner.mainPage.MainActivity
+import viktor.braus.kplanner.timer.TTimer
 import viktor.braus.kplanner.work.RefreshDataWorker
 import java.util.concurrent.TimeUnit
 
 class ListFragment : Fragment()
 {
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Timber.i("onSaveInstanceState Called")
+    }
     override fun onStart() {
         super.onStart()
-        Timber.i("----------onStart Called.----------")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
         Timber.i("----------onStart Called.----------")
     }
     override fun onPause() {
@@ -53,6 +54,8 @@ class ListFragment : Fragment()
             savedInstanceState: Bundle?
     ): View?
     {
+
+
         val binding: ListFragmentBinding =  DataBindingUtil.inflate(
                 inflater,
                 R.layout.list_fragment,

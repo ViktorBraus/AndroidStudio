@@ -98,12 +98,6 @@ class PlansViewModel(application: Application,
             return _editTime.value
         }
     }
-    fun showUser():String
-    {
-        Timber.i("-------------------------------------")
-        _daytext.value = MainActivity.dayText
-        return  _daytext.value.toString()
-    }
     private fun initializePlans()
     {
         viewModelScope.launch {
@@ -146,15 +140,6 @@ class PlansViewModel(application: Application,
             insert(newPlan)
             plan.value = getPlanFromDb()
             _showSnackbarEvent.value = true
-        }
-    }
-    fun onStopTracking()
-    {
-        viewModelScope.launch {
-            var oldPlan = plan.value ?: return@launch
-            oldPlan.EventName = "TextNameccc"
-            oldPlan.EventName = "TestTimecc"
-            update(oldPlan)
         }
     }
 }

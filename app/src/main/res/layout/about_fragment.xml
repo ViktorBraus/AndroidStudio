@@ -13,7 +13,6 @@
         android:layout_height="match_parent"
         android:background="@drawable/abstrakciya_cvet_ugol_fon_1087"
         tools:layout_editor_absoluteX="1dp">
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,109 +26,114 @@
             android:id="@+id/coordinatorLayout"
             android:layout_width="match_parent"
             android:layout_height="790dp">
-
             <TextView
-                android:id="@+id/textView18"
+                android:id="@+id/Title"
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
+                android:fontFamily="@font/yeseva_one"
                 android:gravity="center"
-                android:text="Про разработчика"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/textView27"
+                android:text="@string/Title"
+                app:layout_constraintBottom_toTopOf="@+id/DevText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
+                tools:ignore="MissingConstraints"
+                style="@style/TextAppearance.Title" />
 
             <Button
-                android:id="@+id/button14"
+                android:id="@+id/ShowPhotos"
                 android:layout_width="145dp"
                 android:layout_height="35dp"
                 android:background="#4D1271"
+                android:fontFamily="@font/yeseva_one"
                 android:onClick="@{() -> aboutViewModel.Count_of_Click}"
-                android:text="Show Photos"
+                android:text="@string/show_photos"
                 android:textColor="#FFFFFF"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView18" />
+                app:layout_constraintTop_toBottomOf="@+id/Title" />
 
             <TextView
-                android:id="@+id/textView23"
+                android:id="@+id/First"
                 android:layout_width="145dp"
                 android:layout_height="0dp"
                 android:textColor="#FFFFFF"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button14" />
+                app:layout_constraintTop_toBottomOf="@+id/ShowPhotos" />
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/FirstImage"
                 android:layout_width="145dp"
                 android:layout_height="124dp"
+                android:contentDescription="@string/secondphoto"
                 android:scaleType="fitXY"
                 android:src="@drawable/img_3294"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView24" />
+                app:layout_constraintTop_toBottomOf="@+id/Second" />
 
             <TextView
-                android:id="@+id/textView24"
+                android:id="@+id/Second"
                 android:layout_width="145dp"
                 android:layout_height="17dp"
                 android:text=""
                 android:textColor="#FFFFFF"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+                app:layout_constraintTop_toBottomOf="@+id/FourthImage" />
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/SecondImage"
                 android:layout_width="145dp"
                 android:layout_height="124dp"
+                android:contentDescription="@string/thirdphoto"
                 android:scaleType="fitXY"
                 android:src="@drawable/img_4361"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView25" />
+                app:layout_constraintTop_toBottomOf="@+id/Third" />
 
             <TextView
-                android:id="@+id/textView25"
+                android:id="@+id/Third"
                 android:layout_width="145dp"
                 android:layout_height="17dp"
                 android:layout_marginStart="2dp"
                 android:textColor="#FFFFFF"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+                app:layout_constraintTop_toBottomOf="@+id/FirstImage" />
 
             <ImageView
-                android:id="@+id/imageView6"
+                android:id="@+id/ThirdImage"
                 android:layout_width="145dp"
                 android:layout_height="164dp"
+                android:contentDescription="@string/fourthphoto"
                 android:scaleType="fitXY"
                 android:src="@drawable/img_6003"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView26" />
+                app:layout_constraintTop_toBottomOf="@+id/Fourth" />
 
             <TextView
-                android:id="@+id/textView26"
+                android:id="@+id/Fourth"
                 android:layout_width="145dp"
                 android:layout_height="17dp"
                 android:textColor="#FFFFFF"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+                app:layout_constraintTop_toBottomOf="@+id/SecondImage" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/FourthImage"
                 android:layout_width="145dp"
                 android:layout_height="124dp"
+                android:contentDescription="@string/firstphoto"
                 android:scaleType="fitXY"
                 android:src="@drawable/img_1444"
-                app:layout_constraintBottom_toTopOf="@+id/textView24"
+                app:layout_constraintBottom_toTopOf="@+id/Second"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView23" />
+                app:layout_constraintTop_toBottomOf="@+id/First" />
 
             <TextView
-                android:id="@+id/textView27"
+                android:id="@+id/DevText"
                 android:layout_width="0dp"
                 android:layout_height="939dp"
                 android:layout_marginEnd="4dp"
+                android:fontFamily="@font/yeseva_one"
                 android:text="@string/information"
                 android:textColor="#C3FF0000"
                 android:textSize="18sp"
@@ -137,7 +141,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textView25"
+                app:layout_constraintStart_toEndOf="@+id/Third"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.012" />
 

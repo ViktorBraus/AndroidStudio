@@ -75,7 +75,7 @@ class PlansFragment : Fragment() {
                     viewModel.setSelectedEndTime(time)
                     if(viewModel.selectedStartTime.value?.hour!! <= viewModel.selectedEndTime.value?.hour!!)
                     {
-                        if (viewModel.selectedStartTime.value?.minute!! < viewModel.selectedEndTime.value?.minute!!)
+                        if (viewModel.selectedStartTime.value?.minute!! <= viewModel.selectedEndTime.value?.minute!!)
                             viewModel.setSelectedEndTime(time)
                         else {
                             Toast.makeText(this.activity, "Введіть будь ласка хвилини, більші за час початку події", Toast.LENGTH_SHORT).show()
@@ -120,11 +120,6 @@ class PlansFragment : Fragment() {
         super.onPause()
         Timber.i("----------onPause Called.----------")
     }
-
-    /*public override fun onDestroy() {
-        super.onDestroy()
-        Timber.i("----------onDestroy Called.----------")
-    }*/
 
     public override fun onResume() {
         super.onResume()

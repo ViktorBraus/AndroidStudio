@@ -38,7 +38,16 @@ class ListPlansAdapter : ListAdapter<Plans, ListPlansAdapter.ViewHolder>(LisDiff
                 {
                     mondayText.setTextColor(Color.WHITE)
                 }
-                mondayText.text = "Назва Події:     " + item.EventName + "\nЧас події:      " + item.Time
+                if(item.StartTime != "")
+                {
+                    mondayText.text = "Назва Події:   " + item.EventName +
+                            "\nЧас події:   " + item.Time + "\n Початок:   "+ item.StartTime + "\n Кінець:   " + item.EndTime
+                }
+                else
+                {
+                    mondayText.text = "Назва Події:   " + item.EventName + "\nЧас події:   " + item.Time
+                }
+
             }
         }
         companion object {
