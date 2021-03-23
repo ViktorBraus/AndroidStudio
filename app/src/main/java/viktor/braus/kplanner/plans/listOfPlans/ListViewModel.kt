@@ -32,7 +32,6 @@ class ListViewModel(application: Application,
         get() = _username
     init {
         _username.value = ""
-
     }
     val playlist = videosRepository.weather
     fun showUser():String

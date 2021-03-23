@@ -4,7 +4,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/abstrakciya_cvet_ugol_fon_1087"
         android:focusedByDefault="false"
         android:forceHasOverlappingRendering="false"
         android:foregroundTintMode="add"
@@ -13,7 +12,8 @@
         android:overScrollMode="always"
         android:verticalScrollbarPosition="defaultPosition"
         tools:menu="@menu/main_menu"
-        app:layout_constraintGuide_end="@dimen/spacing_normal">
+        app:layout_constraintGuide_end="@dimen/spacing_normal"
+        android:background="@drawable/abstrakciya_cvet_ugol_fon_1087">
 
         <TextView
             android:id="@+id/MainText"
@@ -97,6 +97,15 @@
             app:layout_constraintEnd_toStartOf="@+id/EntranceButton"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <Switch
+            android:id="@+id/darkThemeSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dark Theme"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:onClick="setTheme"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

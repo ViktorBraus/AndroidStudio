@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
+import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -29,8 +30,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+
 class MainActivity : AppCompatActivity() {
     var d: String? = null
+    var theme: Boolean = false
     var fragment = MainFragment()
     var TTimer: TTimer = TTimer()
     var time: String? = null
@@ -61,13 +64,13 @@ class MainActivity : AppCompatActivity() {
             .setConstraints(constraints)
             .build()
         WorkManager.getInstance().enqueueUniquePeriodicWork(
-            RefreshDataWorker.WORK_NAME,
-            ExistingPeriodicWorkPolicy.KEEP,
-            repeatingRequest)
+                RefreshDataWorker.WORK_NAME,
+                ExistingPeriodicWorkPolicy.KEEP,
+                repeatingRequest)
     }
     override fun onCreate(savedInstanceState: Bundle?)
     {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+/*        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)*/
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_page)
         supportFragmentManager
@@ -125,8 +128,7 @@ class MainActivity : AppCompatActivity() {
         val id = item.itemId
         when (id) {
             R.id.main_activity -> {
-                if(S == null)
-                {
+                if (S == null) {
                     Timber.i("---------------------------Активирован пункт меню открытия распорядка дня------------------------")
                     var fragment = MainFragment()
                     supportFragmentManager
@@ -135,17 +137,14 @@ class MainActivity : AppCompatActivity() {
                             .addToBackStack(null)
                             .commit()
                     return true
-                }
-                else
-                {
-                    Toast.makeText(this,"Ви вже авторизовані))",Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Ви вже авторизовані))", Toast.LENGTH_SHORT).show()
                     return false
                 }
 
             }
             R.id.open_activity -> {
-                if(S!=null)
-                {
+                if (S != null) {
                     Timber.i("---------------------------Активирован пункт меню открытия распорядка дня------------------------")
                     var fragment = ListFragment()
                     supportFragmentManager
@@ -154,10 +153,8 @@ class MainActivity : AppCompatActivity() {
                             .addToBackStack(null)
                             .commit()
                     return true
-                }
-                else
-                {
-                    Toast.makeText(this,"Будь ласка, введіть своє ім'я)))",Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Будь ласка, введіть своє ім'я)))", Toast.LENGTH_SHORT).show()
                     return false
                 }
 
@@ -165,10 +162,10 @@ class MainActivity : AppCompatActivity() {
             R.id.about -> {
                 var fragment = About_Fragment()
                 supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.main_container, fragment)
-                    .addToBackStack(null)
-                    .commit()
+                        .beginTransaction()
+                        .replace(R.id.main_container, fragment)
+                        .addToBackStack(null)
+                        .commit()
                 Timber.i("---------------------------Активирован пункт меню про разработчика------------------------")
                 return true
             }
@@ -176,8 +173,8 @@ class MainActivity : AppCompatActivity() {
                 val sendIntent = Intent()
                 sendIntent.action = Intent.ACTION_SEND
                 sendIntent.putExtra(
-                    Intent.EXTRA_TEXT,
-                    """
+                        Intent.EXTRA_TEXT,
+                        """
                 I`m 20 years old, living in Chernivtsi, Ukraine. For 
                 whole my life i was always interested in Computer 
                 Science and tried to understand how to use this 
@@ -205,10 +202,10 @@ class MainActivity : AppCompatActivity() {
             R.id.information -> {
                 var fragment = Information_fragment()
                 supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.main_container, fragment)
-                    .addToBackStack(null)
-                    .commit()
+                        .beginTransaction()
+                        .replace(R.id.main_container, fragment)
+                        .addToBackStack(null)
+                        .commit()
                 Timber.i("---------------------------Активирован пункт меню про программу------------------------")
                 startActivity(intent)
                 return true
@@ -240,7 +237,7 @@ class MainActivity : AppCompatActivity() {
         }
         else
         {
-            Toast.makeText(this,"Будь ласка, введіть своє ім'я)))",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Будь ласка, введіть своє ім'я)))", Toast.LENGTH_SHORT).show()
         }
     }
     fun Exit(view: View)
@@ -257,7 +254,7 @@ class MainActivity : AppCompatActivity() {
             .addToBackStack(null)
             .commit()
     }
-    fun returning(v:View) {
+    fun returning(v: View) {
         Timber.i("---------------------------Возвращение на страницу распорядка------------------------")
         var fragment = ListFragment()
         supportFragmentManager
@@ -328,9 +325,9 @@ class MainActivity : AppCompatActivity() {
                 d=t.text.toString()
             }
             TimePickerDialog(
-                this@MainActivity, timeSetListener,
-                cal.get(Calendar.HOUR_OF_DAY),
-                cal.get(Calendar.MINUTE), true
+                    this@MainActivity, timeSetListener,
+                    cal.get(Calendar.HOUR_OF_DAY),
+                    cal.get(Calendar.MINUTE), true
             ).show()
         }
         if(id==R.id.timeStartButton)
@@ -343,9 +340,9 @@ class MainActivity : AppCompatActivity() {
                 d=t1.text.toString()
             }
             TimePickerDialog(
-                this@MainActivity, timeSetListener,
-                cal.get(Calendar.HOUR_OF_DAY),
-                cal.get(Calendar.MINUTE), true
+                    this@MainActivity, timeSetListener,
+                    cal.get(Calendar.HOUR_OF_DAY),
+                    cal.get(Calendar.MINUTE), true
             ).show()
         }
         if(id==R.id.timeEndButton)
@@ -358,10 +355,26 @@ class MainActivity : AppCompatActivity() {
                 d=t2.text.toString()
             }
             TimePickerDialog(
-                this@MainActivity, timeSetListener,
-                cal.get(Calendar.HOUR_OF_DAY),
-                cal.get(Calendar.MINUTE), true
+                    this@MainActivity, timeSetListener,
+                    cal.get(Calendar.HOUR_OF_DAY),
+                    cal.get(Calendar.MINUTE), true
             ).show()
+        }
+    }
+    fun setTheme(view: View)
+    {
+        var darkthemeSwitchChecked: Switch? = null
+        @SuppressLint("UseSwitchCompatOrMaterialCode")
+        val darkThemeSwitch = view as Switch
+        if(theme == false)
+        {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            theme = true
+        }
+        else
+        {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            theme = false
         }
     }
 }
