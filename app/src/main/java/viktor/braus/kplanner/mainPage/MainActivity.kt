@@ -51,7 +51,6 @@ class MainActivity : AppCompatActivity() {
     private fun delayedInit() = applicationScope.launch { setupRecurringWork() }
     private fun setupRecurringWork() {
         val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.UNMETERED)
             .setRequiresBatteryNotLow(true)
             .setRequiresCharging(true)
             .apply {

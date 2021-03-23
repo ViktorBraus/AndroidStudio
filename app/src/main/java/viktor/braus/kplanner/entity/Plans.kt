@@ -31,6 +31,6 @@ data class Weather constructor(
 )
 fun List<Weather>.asDomainModel(): List<String> {
     return map {
-        "Місто: " + it.name + "\nТемпература повітря: " + it.temp.toString() + "\nВідчуваєтсья як: " + it.feels_like.toString()
+        "Місто: " + it.name + "\nТемпература повітря: " + it.temp.toString() + "'C \nВідчуваєтсья як: " + it.feels_like.toString() + "'C"
     }
 }
